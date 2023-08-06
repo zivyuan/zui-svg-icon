@@ -11,7 +11,7 @@ const fs = require("fs");
 const path = require("path");
 const { optimize } = require("svgo");
 
-const root = path.resolve(__dirname + "/..");
+const root = path.resolve(__dirname + "/../../..");
 // 需要处理的颜色属性
 const regColorProps = /(?:fill|stroke)="([^"]+)"/g;
 let svgBase = "";

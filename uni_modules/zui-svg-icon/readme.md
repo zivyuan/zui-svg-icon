@@ -1,4 +1,4 @@
-# zui-svg-icon
+# &lt;zui-svg-icon /&gt;
 
 一款适用于 uni-app 的 SVG 图标组件。
 
@@ -24,8 +24,6 @@
 
 
 ## 📝 TODO
-
-- [ ] 增加 VUE3 支持
 
 - [ ] 增加微信小程序支持(未测试,理论上直接使用没问题)
 
@@ -60,17 +58,19 @@
 
 
 
-## 🏭 SVG 图标生成
+## 🤖 SVG 图标生成
 
 使用专用脚本生成 SVG 图标库。
 
 
 
-### 1️⃣ 生成步骤
+### 0️⃣ 生成步骤
 
-1. 将 SVG 图标复制到 **图标保存位置**
-2. 运行脚本 `node /{path-to-script}/generate-svg-icon.js`
-3. 结束！
+0. 安装依赖：`npm install svgo@latest --save-dev`
+1. 添加运行脚本：` "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
+2. 将 SVG 图标复制到 **图标保存位置**
+3. 运行脚本 `npm run svgicon`
+4. 结束！
 
 脚本会生成图标库时会保持和目录里的图标一致。
 
@@ -83,20 +83,6 @@ Update xls
        [ '#47b347', '#e0efdc' ]
 Total 2 svg icon(s) generated, 1 added, 0 deleted.
 ```
-
-
-
-### 🤖 添加脚本
-
-如果使用 npm 管理项目，可以在 package.json 中添加一个脚本以方便调用。
-
-` "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js",`
-
-**PS: 文件路径根据实际情况调整**
-
-使用：
-
-`npm run svgicon`
 
 
 
@@ -115,6 +101,7 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 #### 图标库位置：
 
 `/static/svg-icons/svg-icons-lib.js`
+
 
 
 

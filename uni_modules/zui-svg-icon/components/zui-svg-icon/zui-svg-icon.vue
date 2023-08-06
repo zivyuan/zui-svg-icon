@@ -143,6 +143,12 @@ export default {
         background-size: contain !important;
       }
     }
+    :deep() {
+      > div {
+        background-image: var(--zui-svg-icon-image) !important;
+        background-size: contain !important;
+      }
+    }
   }
 }
 </style>
