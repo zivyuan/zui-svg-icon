@@ -1,4 +1,4 @@
-# zui-svg-icon
+# &lt;zui-svg-icon /&gt;
 
 一款适用于 uni-app 的 SVG 图标组件。
 
@@ -124,5 +124,5 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 
 不爱咖啡☕️，来瓶肥宅快乐水🥤吧！
 
-<img src="./assets/doc/readme/WechatIMG131.jpg" alt="WechatIMG131" style="zoom:25%;" />
+<img src="./assets/doc/readme/WechatIMG131.jpg" alt="WechatIMG131"  width="256" />
 
