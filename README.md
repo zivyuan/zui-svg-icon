@@ -124,5 +124,5 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 
 不爱咖啡☕️，来瓶肥宅快乐水🥤吧！
 
-<img src="./assets/doc/readme/WechatIMG131.jpg" alt="WechatIMG131" style="zoom:25%;" />
+<img src="./assets/doc/readme/WechatIMG131.jpg" alt="WechatIMG131" style="zoom:25%;" width="256" />
 
