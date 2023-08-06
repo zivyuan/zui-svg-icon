@@ -2,7 +2,7 @@
 
 一款适用于 uni-app 的 SVG 图标组件。
 
-解决了 uni-app 在 APP 端中无法使用 SVG标签的问题，在拉齐SVG图标显示问题的同时还支持单色图标换色、多色SVG图标显示、多色SVG图标换色。
+**解决了 uni-app 在 APP 端中无法使用 SVG标签的问题**，在拉齐SVG图标显示问题的同时还支持单色图标换色、多色SVG图标显示、多色SVG图标换色。
 
 使用简单：
 
@@ -15,14 +15,15 @@
 
 
 
-## 特色
+## 🐲 特色
 
 - 图标换色
 - 多色图标
+- 自带优化SVG优化工具
 
 
 
-## TODO
+## 📝 TODO
 
 - [ ] 增加 VUE3 支持
 
@@ -30,15 +31,15 @@
 
 
 
-## SVG 图标设计
+## 🎨 SVG 图标设计
 
-### 单色图标
+### 🤍 单色图标
 
 正常设计导出即可。
 
 
 
-### 多色图标
+### ❤️‍🔥 多色图标
 
 如果多色图标有改色需求，则在制作的时候需要人为控制颜色在SVG文件中出现的顺序，以确保图标的更新对代码的影响减至最小。
 
@@ -59,13 +60,13 @@
 
 
 
-## SVG 图标生成
+## 🏭 SVG 图标生成
 
 使用专用脚本生成 SVG 图标库。
 
 
 
-### 生成步骤
+### 1️⃣ 生成步骤
 
 1. 将 SVG 图标复制到 **图标保存位置**
 2. 运行脚本 `node /{path-to-script}/generate-svg-icon.js`
@@ -85,7 +86,7 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 
 
 
-### 添加脚本
+### 🤖 添加脚本
 
 如果使用 npm 管理项目，可以在 package.json 中添加一个脚本以方便调用。
 
@@ -101,7 +102,7 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 
 
 
-### 文件位置说明
+### 🗄️ 文件位置说明
 
 #### SVG图标位置：
 
@@ -114,4 +115,14 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 #### 图标库位置：
 
 `/static/svg-icons/svg-icons-lib.js`
+
+
+
+
+
+## 💎 支持
+
+不爱咖啡☕️，来瓶肥宅快乐水🥤吧！
+
+<img src="./assets/doc/readme/WechatIMG131.jpg" alt="WechatIMG131" style="zoom:25%;" />
 
