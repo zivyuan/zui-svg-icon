@@ -1,0 +1,22 @@
+{
+  "name": "zui-svg-icon",
+  "version": "1.0.0",
+  "description": "SVG icon component for uniapp",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pack": "zip",
+    "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"
+  },
+  "keywords": [
+    "svg",
+    "icon",
+    "uniapp",
+    "svg-icon"
+  ],
+  "author": "ziv.yuan@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "svgo": "^3.0.2"
+  }
+}

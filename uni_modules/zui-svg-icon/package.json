@@ -1,0 +1,89 @@
+{
+  "id": "zui-svg-icon",
+  "displayName": "zui-svg-icon",
+  "version": "1.0.0",
+  "description": "一款适用于 uni-app 的 SVG 图标组件。解决了 uni-app 在 APP 端中无法使用 SVG标签的问题，在拉齐SVG图标显示问题的同时，还支持图标换色，多色SVG图标显示与换色。",
+  "keywords": [
+    "svg",
+    "icon",
+    "svg-icon",
+    "多颜色SVG",
+    "图标",
+    "换色",
+    "图标换色",
+    "SVG图标",
+    "图标组件"
+],
+  "repository": "https://github.com/zivyuan/zui-svg-icon.git",
+  "engines": {
+    "HBuilderX": "^3.1.0"
+  },
+  "dcloudext": {
+    "type": "component-vue",
+    "sale": {
+      "regular": {
+        "price": "0.00"
+      },
+      "sourcecode": {
+        "price": "0.00"
+      }
+    },
+    "contact": {
+      "qq": ""
+    },
+    "declaration": {
+      "ads": "",
+      "data": "",
+      "permissions": ""
+    },
+    "npmurl": ""
+  },
+  "uni_modules": {
+    "dependencies": [],
+    "encrypt": [],
+    "platforms": {
+      "cloud": {
+        "tcb": "u",
+        "aliyun": "u"
+      },
+      "client": {
+        "Vue": {
+          "vue2": "u",
+          "vue3": "u"
+        },
+        "App": {
+          "app-vue": "u",
+          "app-nvue": "u"
+        },
+        "H5-mobile": {
+          "Safari": "u",
+          "Android Browser": "u",
+          "微信浏览器(Android)": "u",
+          "QQ浏览器(Android)": "u"
+        },
+        "H5-pc": {
+          "Chrome": "u",
+          "IE": "u",
+          "Edge": "u",
+          "Firefox": "u",
+          "Safari": "u"
+        },
+        "小程序": {
+          "微信": "u",
+          "阿里": "u",
+          "百度": "u",
+          "字节跳动": "u",
+          "QQ": "u",
+          "钉钉": "u",
+          "快手": "u",
+          "飞书": "u",
+          "京东": "u"
+        },
+        "快应用": {
+          "华为": "u",
+          "联盟": "u"
+        }
+      }
+    }
+  }
+}
