@@ -2,10 +2,17 @@
   <view class="content">
     <view class="container">
       <view v-for="icon in iconLib" :key="icon.key" class="icon-item">
-        <view class="title">{{ icon.key }}</view>
+        <view class="title"
+          >&lt;zui-svg-icon icon={{ '"'
+          }}<text class="icon-code">{{ icon.key }}</text
+          >{{ '"' }} /&gt;</view
+        >
         <view class="icon">
           <zui-svg-icon :icon="icon.key" />
-          <zui-svg-icon :icon="icon.key" :color="['#999', '#eaeaea', '#175e21']"/>
+          <zui-svg-icon
+            :icon="icon.key"
+            :color="['#999', '#eaeaea', '#175e21']"
+          />
         </view>
       </view>
     </view>
@@ -22,8 +29,10 @@ export default {
   },
 
   data() {
-    const lib = Object.keys(IconLib)
-      .map((key) => ({ key, icon: IconLib[key] }))
+    const lib = Object.keys(IconLib).map((key) => ({
+      key,
+      icon: IconLib[key],
+    }));
     return {
       iconLib: lib,
     };
@@ -38,6 +47,17 @@ export default {
 .container {
   padding: 48rpx;
 }
+
+.title {
+  color: #999;
+}
+
+.icon-code {
+  color: #333;
+  font-weight: bold;
+  margin: 0 0.25em;
+}
+
 .icon-item {
   margin-bottom: 2em;
 }
