@@ -47,6 +47,7 @@ export default {
   data() {
     return {
       isFilled: false,
+      fixedHei: 0,
     };
   },
 
@@ -75,6 +76,10 @@ export default {
         "--zui-svg-icon-width": width,
         "--zui-svg-icon-aspect-ratio": this.aspectRatio,
       };
+
+      if (this.fixedHei) {
+        style['--zui-svg-icon-height'] = `${this.fixedHei * this.aspectRatio}px`
+      }
 
       let svg = icon;
       if (this.multiColors.length > 1 && this.color) {
@@ -118,18 +123,31 @@ export default {
       // #endif
     },
   },
+
+  mounted() {
+    // #ifndef H5
+    const query = uni.createSelectorQuery().in(this)
+    query.select('.zui-svg-icon').fields({ size: true }).exec((rst) => {
+      this.fixedHei = rst[0].width
+    })
+    // #endif
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .zui-svg-icon {
+  --zui-svg-icon-height-auto: calc(var(--zui-svg-icon-width) * var(--zui-svg-icon-aspect-ratio));
+
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
   aspect-ratio: var(--zui-svg-icon-aspect-ratio);
   width: var(--zui-svg-icon-width);
-  height: calc(var(--zui-svg-icon-width) * var(--zui-svg-icon-aspect-ratio));
+  // #ifndef H5
+  height: var(--zui-svg-icon-height, --zui-svg-icon-height-auto);
+  // #endif
   line-height: 1;
   vertical-align: middle;
   margin: 0 0.2em;
