@@ -1,7 +1,7 @@
 {
     "name" : "zui-svg-icon",
-    "appid" : "",
-    "description" : "SVG icon component for uniapp",
+    "appid" : "__UNI__EFDF97A",
+    "description" : "SVG icon component for uni-app",
     "versionName" : "0.1.0",
     "versionCode" : "010",
     "transformPx" : false,
@@ -50,9 +50,10 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "",
+        "appid" : "wxc6931d68d47d113a",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "es6" : true
         },
         "usingComponents" : true
     },

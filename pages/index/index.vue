@@ -2,10 +2,11 @@
   <view class="content">
     <view class="container">
       <view v-for="icon in iconLib" :key="icon.key" class="icon-item">
+        <view class="title">{{ icon.key }}</view>
         <view class="icon">
           <zui-svg-icon :icon="icon.key" />
+          <zui-svg-icon :icon="icon.key" :color="['#999', '#eaeaea', '#175e21']"/>
         </view>
-        <view class="title">{{ icon.key }}</view>
       </view>
     </view>
   </view>
@@ -33,20 +34,23 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
   padding: 48rpx;
 }
 .icon-item {
-  width: 25%;
-  text-align: center;
   margin-bottom: 2em;
 }
 
 .icon {
+  display: flex;
+  justify-content: flex-start;
   font-size: 80rpx;
+  margin-right: -8px;
+  margin-left: -8px;
+
+  .zui-svg-icon {
+    margin: 16rpx;
+  }
 }
 </style>

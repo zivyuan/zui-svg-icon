@@ -82,9 +82,9 @@ export default {
           typeof this.color === "string" ? this.color.split(",") : this.color;
         if (color.length >= this.multiColors.length) {
           // 填充多色
-          svg = icon.replace(regColorProps, (_, color) => {
-            if (color === "none") return _;
-            const idx = this.multiColors.findIndex((item) => item === color);
+          svg = icon.replace(regColorProps, (_, c) => {
+            if (c === "none") return _;
+            const idx = this.multiColors.findIndex((item) => item === c);
             return `fill="${color[idx]}"`;
           });
         } else {
@@ -95,10 +95,7 @@ export default {
           }
         }
       } else if (/^#[0-9A-F]+$/i.test(this.color)) {
-        svg =
-          icon.indexOf("fill=") === -1
-            ? icon.replace(/<(path|p)( |>)/g, `<$1 fill="${this.color}"$2`)
-            : icon.replace(
+        svg = icon.replace(
                 regColorProps,
                 (_, v) => `fill="${v === "none" ? v : this.color}"`
               );
@@ -107,7 +104,18 @@ export default {
       style[
         "--zui-svg-icon-image"
       ] = `url('data:image/svg+xml,${encodeURIComponent(svg)}')`;
+
+      // #ifdef MP
+
+      return Object.keys(style).map(key => `${key}:${style[key]}`).join('; ')
+
+      // #endif
+
+      // #ifndef MP
+
       return style;
+
+      // #endif
     },
   },
 };
@@ -119,9 +127,9 @@ export default {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: var(--zui-svg-icon-width);
-  height: auto;
   aspect-ratio: var(--zui-svg-icon-aspect-ratio);
+  width: var(--zui-svg-icon-width);
+  height: calc(var(--zui-svg-icon-width) * var(--zui-svg-icon-aspect-ratio));
   line-height: 1;
   vertical-align: middle;
   margin: 0 0.2em;
@@ -136,19 +144,10 @@ export default {
   .zui-svg-icon-image {
     width: 100%;
     height: 100%;
-
-    ::v-deep {
-      > div {
-        background-image: var(--zui-svg-icon-image) !important;
-        background-size: contain !important;
-      }
-    }
-    :deep() {
-      > div {
-        background-image: var(--zui-svg-icon-image) !important;
-        background-size: contain !important;
-      }
-    }
+    background-image: var(--zui-svg-icon-image);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 }
 </style>
