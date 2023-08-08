@@ -60,14 +60,15 @@ svgList.forEach((item) => {
     multipass: true,
   });
   svgLib[name] = result.data;
-  const colors = [...result.data.matchAll(regColorProps)]
+  let colors = [...result.data.matchAll(regColorProps)]
     .filter((item) => item[1] !== "none")
     .map((item) => item[1]);
-  const hasMultiColor = colors.length
-    ? !!colors.find((item) => item !== colors[0])
-    : false;
-  if (hasMultiColor) {
-    console.log("      ", Array.from(new Set(colors)));
+  colors = Array.from(new Set(colors))
+  const colorTotal = colors.at.length
+  if (colorTotal === 0) {
+    console.log("      ", '!!! 图标没有颜色定义, 将不支持改色. !!!');
+  } else if (colorTotal > 1) {
+    console.log("      ", colors);
   }
 });
 
