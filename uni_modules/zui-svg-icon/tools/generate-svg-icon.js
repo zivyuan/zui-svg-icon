@@ -9,9 +9,16 @@
 
 const fs = require("fs");
 const path = require("path");
-const { optimize } = require("svgo");
 
 const root = path.resolve(__dirname + "/../../..");
+const svgo = root + '/svgo.config.js'
+if (!fs.existsSync(svgo)) {
+  fs.copyFileSync(__dirname + '/svgo.config.js', svgo);
+}
+
+const { optimize } = require("svgo");
+
+
 // 需要处理的颜色属性
 const regColorProps = /(?:fill|stroke)="([^"]+)"/g;
 let svgBase = "";
