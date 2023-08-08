@@ -1,8 +1,8 @@
 {
   "id": "zui-svg-icon",
   "displayName": "zui-svg-icon",
-  "version": "0.1.2",
-  "description": "一款适用于 uni-app 的 SVG 图标组件。解决了 uni-app 在 APP 端中无法使用 SVG标签的问题，在拉齐SVG图标显示问题的同时，还支持图标换色，多色SVG图标显示与换色。",
+  "version": "0.1.4",
+  "description": "一款适用于 uni-app 的 SVG 图标组件。除基础的图标显示之外, 还支持单色/多色图标换色。支持 uni-app APP端, h5端和微信小程序",
   "keywords": [
     "SVG图标",
     "多色SVG",
@@ -64,7 +64,7 @@
           "Safari": "y"
         },
         "小程序": {
-          "微信": "u",
+          "微信": "y",
           "阿里": "u",
           "百度": "u",
           "字节跳动": "u",

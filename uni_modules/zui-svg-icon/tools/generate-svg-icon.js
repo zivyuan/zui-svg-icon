@@ -41,17 +41,11 @@ const svgLib = {};
 const svgList = fs.readdirSync(svgPath);
 const reg = /\.svg$/i;
 let added = 0;
+let hasChange = false;
 svgList.forEach((item) => {
   if (!reg.test(item)) return;
 
   const name = item.slice(0, -4);
-  if (svgLibCurrent[name]) {
-    console.log("Update", name);
-    delete svgLibCurrent[name];
-  } else {
-    console.log("   Add", name);
-    added++;
-  }
   const svgContent = fs.readFileSync(svgPath + "/" + item);
   const result = optimize(svgContent, {
     // optional but recommended field
@@ -59,21 +53,33 @@ svgList.forEach((item) => {
     // all config fields are also available here
     multipass: true,
   });
+  const updated = svgLibCurrent[name] !== result.data;
   svgLib[name] = result.data;
+
+  if (svgLibCurrent[name]) {
+    console.log(updated ? "Update" : "  Keep", name);
+    delete svgLibCurrent[name];
+  } else {
+    console.log("   Add", name);
+    added++;
+  }
   let colors = [...result.data.matchAll(regColorProps)]
     .filter((item) => item[1] !== "none")
     .map((item) => item[1]);
-  colors = Array.from(new Set(colors))
-  const colorTotal = colors.at.length
+  colors = Array.from(new Set(colors));
+  const colorTotal = colors.at.length;
   if (colorTotal === 0) {
-    console.log("      ", '!!! 图标没有颜色定义, 将不支持改色. !!!');
+    console.log("      ", "!!! 图标没有颜色定义, 将不支持改色. !!!");
   } else if (colorTotal > 1) {
     console.log("      ", colors);
   }
+
+  hasChange = hasChange || updated;
 });
 
-const script = [
-  `/**
+if (hasChange) {
+  const script = [
+    `/**
  *
  * Icon Library for <ks-svg-icon> usage
  *
@@ -84,15 +90,20 @@ const script = [
  * @datetime ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}
  *
  */`,
-  "",
-  "export default " + JSON.stringify(svgLib, null, 2),
-];
-fs.writeFileSync(svgLibFile, script.join("\n"));
-const deleted = Object.keys(svgLibCurrent).map((item) =>
-  console.log(`Delete ${item}`)
-).length;
-console.log(
-  `Total ${
-    Object.keys(svgLib).length
-  } svg icon(s) generated, ${added} added, ${deleted} deleted.`
-);
+    "",
+    "export default " + JSON.stringify(svgLib, null, 2),
+  ];
+  fs.writeFileSync(svgLibFile, script.join("\n"));
+  const deleted = Object.keys(svgLibCurrent).map((item) =>
+    console.log(`Delete ${item}`)
+  ).length;
+  console.log(
+    `Total ${
+      Object.keys(svgLib).length
+    } svg icon(s) generated, ${added} added, ${deleted} deleted.`
+  );
+} else {
+  console.log(
+    `Total ${Object.keys(svgLib).length} svg icon(s) generated, nochange.`
+  );
+}
