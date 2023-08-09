@@ -13,7 +13,7 @@
 <zui-svg-icon icon="doc" :color="['#FF0000', '#00FF00', '#0000FF']" />
 ```
 
-**DEMO:** [zivyuan.github.io/zui-svg-icon/](zivyuan.github.io/zui-svg-icon/)
+**DEMO:** [https://zivyuan.github.io/zui-svg-icon/](https://zivyuan.github.io/zui-svg-icon/)
 
 ## 兼容性
 
