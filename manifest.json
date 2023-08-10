@@ -75,5 +75,12 @@
         "router" : {
             "base" : "/zui-svg-icon/"
         }
+    },
+    "mp-qq" : {
+        "appid" : "1112242173",
+        "setting" : {
+            "es6" : true,
+            "minified" : true
+        }
     }
 }
