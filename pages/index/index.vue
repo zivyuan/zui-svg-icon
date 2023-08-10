@@ -66,11 +66,12 @@ export default {
   display: flex;
   justify-content: flex-start;
   font-size: 80rpx;
-  margin-right: -8px;
-  margin-left: -8px;
+  margin-right: -16rpx;
+  margin-left: -16rpx;
+  line-height: 1;
 
   .zui-svg-icon {
-    margin: 16rpx;
+    margin: 0 16rpx;
   }
 }
 </style>

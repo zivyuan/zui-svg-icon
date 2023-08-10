@@ -1,10 +1,20 @@
 <template>
   <view class="zui-svg-icon" :style="style">
+    <!-- #ifdef MP-ALIPAY -->
+    <!-- 支付宝小程序不支持背景方式显示SVG -->
+    <image
+      class="zui-svg-icon-image"
+      :src="svgDataurl"
+      mode="aspectFit"
+    ></image>
+    <!-- #endif -->
+    <!-- #ifndef MP-ALIPAY -->
     <image
       class="zui-svg-icon-image"
       src="../../static/zui-svg-icon/zui-svg-icon-placeholder.svg"
-      mode="aspectFill"
+      mode="aspectFit"
     ></image>
+    <!-- #endif -->
   </view>
 </template>
 
@@ -60,7 +70,7 @@ export default {
       return this.colorIdx;
     },
 
-    style() {
+    svgRaw() {
       const iconPreset = IconLib.icons[this.icon];
       if (!iconPreset)
         throw new Error(
@@ -68,6 +78,20 @@ export default {
         );
       let svg = iconPreset[0];
 
+      if (this.color && this.isColorCountMatch) {
+        svg = svg.replace(this.colorPlaceholder, (_, a, b) => {
+          return this.colorMap["#" + a.toLowerCase()] + b;
+        });
+      }
+
+      return svg
+    },
+
+    svgDataurl() {
+      return `data:image/svg+xml,${encodeURIComponent(this.svgRaw)}`
+    },
+
+    style() {
       const width =
         typeof this.width === "number" ? `${this.width}px` : this.width;
       const style = {
@@ -81,15 +105,11 @@ export default {
         }px`;
       }
 
-      if (this.color && this.isColorCountMatch) {
-        svg = svg.replace(this.colorPlaceholder, (_, a, b) => {
-          return this.colorMap["#" + a.toLowerCase()] + b;
-        });
-      }
-
+      // #ifndef MP-ALIPAY
       style[
         "--zui-svg-icon-image"
-      ] = `url('data:image/svg+xml,${encodeURIComponent(svg)}')`;
+      ] = `url('${this.svgDataurl}')`;
+      // #endif
 
       // #ifdef MP
 
@@ -189,14 +209,6 @@ export default {
   // #endif
   line-height: 1;
   vertical-align: middle;
-  margin: 0 0.2em;
-
-  &:first-child {
-    margin-left: 0;
-  }
-  &:last-child {
-    margin-right: 0;
-  }
 
   .zui-svg-icon-image {
     width: 100%;
