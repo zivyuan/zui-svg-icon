@@ -11,7 +11,7 @@
 <script>
 import IconLib from "@/static/svg-icons-lib.js";
 
-const regColorProps = /(?:fill|stroke)="([^"]+)"/g;
+const ThePalette = IconLib.$_colorPalette;
 
 export default {
   name: "zui-svg-icon",
@@ -48,27 +48,25 @@ export default {
     return {
       isFilled: false,
       fixedHei: 0,
+      colorMap: {},
+      colorPlaceholder: null,
+      isColorCountMatch: true,
     };
   },
 
   computed: {
     // 返回色彩列表
     multiColors() {
-      const icon = IconLib[this.icon];
-      let colors = [...icon.matchAll(regColorProps)]
-        .filter((item) => item[1] !== "none")
-        .map((item) => item[1]);
-      colors = Array.from(new Set(colors));
-
-      return colors;
+      return this.colorIdx;
     },
 
     style() {
-      let icon = IconLib[this.icon];
-      if (!icon)
+      const iconPreset = IconLib.icons[this.icon];
+      if (!iconPreset)
         throw new Error(
           `Svg icon [${this.icon}] not defined and no fallback icon set.`
         );
+      let svg = iconPreset[0];
 
       const width =
         typeof this.width === "number" ? `${this.width}px` : this.width;
@@ -78,32 +76,15 @@ export default {
       };
 
       if (this.fixedHei) {
-        style['--zui-svg-icon-height'] = `${this.fixedHei * this.aspectRatio}px`
+        style["--zui-svg-icon-height"] = `${
+          this.fixedHei * this.aspectRatio
+        }px`;
       }
 
-      let svg = icon;
-      if (this.multiColors.length > 1 && this.color) {
-        const color =
-          typeof this.color === "string" ? this.color.split(",") : this.color;
-        if (color.length >= this.multiColors.length) {
-          // 填充多色
-          svg = icon.replace(regColorProps, (_, c) => {
-            if (c === "none") return _;
-            const idx = this.multiColors.findIndex((item) => item === c);
-            return `fill="${color[idx]}"`;
-          });
-        } else {
-          if (color.length < this.multiColors.length) {
-            console.warn(
-              `多色图标 ${this.icon} 需要 ${this.multiColors.length} 个颜色, 但只提供了 ${color.length}。`
-            );
-          }
-        }
-      } else if (/^#[0-9A-F]+$/i.test(this.color)) {
-        svg = icon.replace(
-                regColorProps,
-                (_, v) => `fill="${v === "none" ? v : this.color}"`
-              );
+      if (this.color && this.isColorCountMatch) {
+        svg = svg.replace(this.colorPlaceholder, (_, a, b) => {
+          return this.colorMap["#" + a.toLowerCase()] + b;
+        });
       }
 
       style[
@@ -112,7 +93,9 @@ export default {
 
       // #ifdef MP
 
-      return Object.keys(style).map(key => `${key}:${style[key]}`).join('; ')
+      return Object.keys(style)
+        .map((key) => `${key}:${style[key]}`)
+        .join("; ");
 
       // #endif
 
@@ -124,20 +107,76 @@ export default {
     },
   },
 
+  watch: {
+    icon() {
+      this.initialIcon();
+    },
+    color() {
+      this.initialIconColor();
+    },
+  },
+
   mounted() {
-    // #ifndef H5
-    const query = uni.createSelectorQuery().in(this)
-    query.select('.zui-svg-icon').fields({ size: true }).exec((rst) => {
-      this.fixedHei = rst[0].width
-    })
-    // #endif
+    this.initialIcon();
+  },
+
+  methods: {
+    initialIconSize() {
+      // #ifndef H5
+      const query = uni.createSelectorQuery().in(this);
+      query
+        .select(".zui-svg-icon")
+        .fields({ size: true })
+        .exec((rst) => {
+          this.fixedHei = rst[0].width;
+        });
+      // #endif
+    },
+
+    initialIconColor() {
+      // Initial color map
+      const oriColors = this.getOriginalColors();
+      if (this.color) {
+        const newColors =
+          typeof this.color === "string" ? this.color.split(",") : this.color;
+        this.colorPlaceholder = new RegExp(
+          `#(${oriColors.map((item) => item.slice(1)).join("|")})([^\\w])`,
+          "gi"
+        );
+        this.colorMap = oriColors.reduce((a, b, idx) => {
+          return {
+            ...a,
+            [b]: newColors[idx] || oriColors[0],
+          };
+        }, {});
+        this.isColorCountMatch = oriColors.length === newColors.length;
+      } else {
+        this.colorPlaceholder = null;
+        this.colorMap = null;
+        this.isColorCountMatch = true;
+      }
+    },
+
+    initialIcon() {
+      this.initialIconSize();
+      this.initialIconColor();
+    },
+
+    getOriginalColors() {
+      const iconPreset = IconLib.icons[this.icon];
+      return iconPreset
+        ? iconPreset.slice(1).map((idx) => ThePalette[idx])
+        : [];
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .zui-svg-icon {
-  --zui-svg-icon-height-auto: calc(var(--zui-svg-icon-width) * var(--zui-svg-icon-aspect-ratio));
+  --zui-svg-icon-height-auto: calc(
+    var(--zui-svg-icon-width) * var(--zui-svg-icon-aspect-ratio)
+  );
 
   position: relative;
   display: inline-flex;

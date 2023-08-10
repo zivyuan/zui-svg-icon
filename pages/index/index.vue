@@ -8,7 +8,7 @@
           >{{ '"' }} /&gt;</view
         >
         <view class="icon">
-          <zui-svg-icon :icon="icon.key" />
+          <zui-svg-icon :ref="`icon_${icon.key}`" :icon="icon.key" />
           <zui-svg-icon
             :icon="icon.key"
             :color="['#999', '#eaeaea', '#175e21']"
@@ -29,9 +29,9 @@ export default {
   },
 
   data() {
-    const lib = Object.keys(IconLib).map((key) => ({
+    const lib = Object.keys(IconLib.icons).map((key) => ({
       key,
-      icon: IconLib[key],
+      icon: IconLib.icons[key],
     }));
     return {
       iconLib: lib,

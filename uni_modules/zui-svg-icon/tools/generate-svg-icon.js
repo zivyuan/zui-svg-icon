@@ -11,16 +11,14 @@ const fs = require("fs");
 const path = require("path");
 
 const root = path.resolve(__dirname + "/../../..");
-const svgo = root + '/svgo.config.js'
+const svgo = root + "/svgo.config.js";
 if (!fs.existsSync(svgo)) {
-  fs.copyFileSync(__dirname + '/svgo.config.js', svgo);
+  fs.copyFileSync(__dirname + "/svgo.config.js", svgo);
 }
 
 const { optimize } = require("svgo");
 
-
 // 需要处理的颜色属性
-const regColorProps = /(?:fill|stroke)="([^"]+)"/g;
 let svgBase = "";
 
 if (fs.existsSync(root + "/src")) {
@@ -39,7 +37,7 @@ const svgLibCurrent = (() => {
   try {
     let raw = fs.readFileSync(svgLibFile, { encoding: "utf-8" });
     raw = raw.substring(raw.indexOf("export default") + 15);
-    return JSON.parse(raw);
+    return JSON.parse(raw).icons;
   } catch (err) {}
   return {};
 })();
@@ -47,8 +45,10 @@ const svgPath = path.resolve(svgFolder);
 const svgLib = {};
 const svgList = fs.readdirSync(svgPath);
 const reg = /\.svg$/i;
-let added = 0;
-let hasChange = false;
+
+const palette = [];
+const strokeWarn = [];
+
 svgList.forEach((item) => {
   if (!reg.test(item)) return;
 
@@ -60,29 +60,92 @@ svgList.forEach((item) => {
     // all config fields are also available here
     multipass: true,
   });
-  const updated = svgLibCurrent[name] !== result.data;
+
   svgLib[name] = result.data;
 
-  if (svgLibCurrent[name]) {
-    console.log(updated ? "Update" : "  Keep", name);
-    delete svgLibCurrent[name];
-  } else {
-    console.log("   Add", name);
-    added++;
-  }
+  // fill, stroke 等
+  const regColorProps = /(fill|stroke|class|style)="([^"]+)"/g;
   let colors = [...result.data.matchAll(regColorProps)]
-    .filter((item) => item[1] !== "none")
-    .map((item) => item[1]);
+    .map((item) => {
+      if (item[2] === "none") return false;
+
+      let color = item[2];
+
+      if (item[1] === "class") {
+        const clspos = result.data.indexOf(`.${item[2]}{`);
+        const clsend = result.data.indexOf("}", clspos);
+        const clrpos = result.data.indexOf("fill:#", clspos);
+        if (clrpos < clsend) {
+          color = result.data
+            .substring(clrpos + 5, clrpos + 14)
+            .replace(/#([0-9a-z]+).*/gi, "#$1");
+        }
+      } else if (item[1] === "style") {
+        if (/fill\:(#[0-9a-f]+)/i.test(item[2])) {
+          color = item[2].replace(/fill\:(#[0-9a-f]+)/i, "$1");
+        } else {
+          color = false;
+        }
+      } else if (item[1] === "fill") {
+        if (/^url/i.test(item[2])) color = false;
+      }
+
+      if (color) {
+        color = color.toLowerCase();
+
+        if (!palette.includes(color)) {
+          palette.push(color);
+        }
+      }
+
+      return color;
+    })
+    .filter((item) => !!item);
+  // 渐变颜色
+  //  <stop offset="0.36" stop-color="#ee2a7b"/>
+  //  <stop offset="0" style="stop-color:#000000;stop-opacity:0.1"/>
+  const regColorGradient =
+    /(stop-color|style)="[^" ]*(?:stop-color:)?(#[0-9a-f]{3,8})"/g;
+  const gradientColors = [...result.data.matchAll(regColorGradient)].map(
+    (item) => {
+      if (!palette.includes(item[2])) palette.push(item[2]);
+      return item[2];
+    }
+  );
+  colors.push(...gradientColors);
   colors = Array.from(new Set(colors));
-  const colorTotal = colors.at.length;
+  const colorMap = colors.map((c) => palette.indexOf(c));
+  const colorTotal = colors.length;
+
+  console.log(name)
   if (colorTotal === 0) {
-    console.log("      ", "!!! 图标没有颜色定义, 将不支持改色. !!!");
-  } else if (colorTotal > 1) {
-    console.log("      ", colors);
+    console.log("    ", "!!! 图标没有颜色定义, 将不支持改色. !!!");
+  } else if (colorTotal > 0) {
+    console.log("    ", colors);
   }
 
-  hasChange = hasChange || updated;
+  if (/stroke(?:-width)?="/i.test(result.data)) {
+    strokeWarn.push(name);
+  }
+
+  svgLib[name] = [result.data, ...colorMap];
 });
+
+if (strokeWarn.length) {
+  console.log(
+    "\n以下图标含有描边, 在缩放时可能导致非预期效果。建议将描边全部转换为填充。"
+  );
+  console.log("\n", strokeWarn.join(", "), "\n");
+}
+
+
+const data = {
+  icons: JSON.parse(JSON.stringify(svgLib)),
+  $_colorPalette: palette,
+};
+
+
+hasChange = JSON.stringify(svgLibCurrent) === JSON.stringify(data)
 
 if (hasChange) {
   const script = [
@@ -98,19 +161,16 @@ if (hasChange) {
  *
  */`,
     "",
-    "export default " + JSON.stringify(svgLib, null, 2),
+    "export default " + JSON.stringify(data, null, 2),
   ];
   fs.writeFileSync(svgLibFile, script.join("\n"));
-  const deleted = Object.keys(svgLibCurrent).map((item) =>
-    console.log(`Delete ${item}`)
-  ).length;
   console.log(
-    `Total ${
+    `\nTotal ${
       Object.keys(svgLib).length
-    } svg icon(s) generated, ${added} added, ${deleted} deleted.`
+    } svg icon(s) generated.`
   );
 } else {
   console.log(
-    `Total ${Object.keys(svgLib).length} svg icon(s) generated, nochange.`
+    `\nTotal ${Object.keys(svgLib).length} svg icon(s) generated, nochange.`
   );
 }

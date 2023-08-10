@@ -1,7 +1,7 @@
 {
   "id": "zui-svg-icon",
   "displayName": "zui-svg-icon",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "一款适用于 uni-app 的 SVG 图标组件。除基础的图标显示之外, 还支持单色/多色图标换色。支持 uni-app APP端, h5端和微信小程序",
   "keywords": [
     "SVG图标",
