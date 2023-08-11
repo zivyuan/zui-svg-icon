@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "zip",
-    "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"
+    "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js",
+    "pub:h5": "rm -rf docs/* && cp -r unpackage/dist/build/h5/* docs/"
   },
   "keywords": [
     "svg",

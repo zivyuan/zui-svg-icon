@@ -82,5 +82,8 @@
             "es6" : true,
             "minified" : true
         }
+    },
+    "mp-lark" : {
+        "appid" : "cli_a45fc6f3a039900c"
     }
 }
