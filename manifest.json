@@ -53,7 +53,8 @@
         "appid" : "wxc6931d68d47d113a",
         "setting" : {
             "urlCheck" : false,
-            "es6" : true
+            "es6" : true,
+            "minified" : true
         },
         "usingComponents" : true
     },
@@ -61,11 +62,18 @@
         "usingComponents" : true,
         "appid" : "2021004107691648"
     },
+    "mp-dingtalk" : {
+        "usingComponents" : true,
+        "appid" : "5000000004855261"
+    },
     "mp-baidu" : {
         "usingComponents" : true
     },
     "mp-toutiao" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "setting" : {
+            "minified" : true
+        }
     },
     "uniStatistics" : {
         "enable" : false
@@ -84,6 +92,6 @@
         }
     },
     "mp-lark" : {
-        "appid" : "cli_a45fc6f3a039900c"
+        "appid" : "cli_a45fc08a73fb900b"
     }
 }

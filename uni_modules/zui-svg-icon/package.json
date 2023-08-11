@@ -1,7 +1,7 @@
 {
   "id": "zui-svg-icon",
   "displayName": "zui-svg-icon",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "一款适用于 uni-app 的 SVG 图标组件。除基础的图标显示之外, 还支持单色/多色图标换色。支持 uni-app APP端, h5端和微信小程序",
   "keywords": [
     "SVG图标",
@@ -68,10 +68,10 @@
           "阿里": "y",
           "百度": "u",
           "字节跳动": "u",
-          "QQ": "u",
-          "钉钉": "u",
+          "QQ": "y",
+          "钉钉": "y",
           "快手": "u",
-          "飞书": "u",
+          "飞书": "y",
           "京东": "u"
         },
         "快应用": {
