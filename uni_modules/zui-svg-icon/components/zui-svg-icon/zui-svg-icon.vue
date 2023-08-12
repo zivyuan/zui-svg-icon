@@ -1,5 +1,7 @@
 <template>
   <view class="zui-svg-icon" :style="style">
+    <view v-if="useClick" class="click-helper" @click="doClick"></view>
+    <view v-else class="click-helper" @tap="doTap"></view>
     <!-- #ifdef MP-ALIPAY -->
     <!-- 支付宝小程序不支持背景方式显示SVG -->
     <image
@@ -65,6 +67,10 @@ export default {
   },
 
   computed: {
+    useClick() {
+      const evt = Object.keys(this.$listeners || {})
+      return evt.includes('click')
+    },
     // 返回色彩列表
     multiColors() {
       return this.colorIdx;
@@ -141,6 +147,16 @@ export default {
   },
 
   methods: {
+    doClick(evt) {
+      console.log('::>> doClick')
+      this.$emit('click', evt)
+    },
+
+    doTap(evt) {
+      console.log('::>> doTap')
+      this.$emit('tap', evt)
+    },
+
     initialIconSize() {
       // #ifndef H5
       const query = uni.createSelectorQuery().in(this);
@@ -218,5 +234,15 @@ export default {
     background-repeat: no-repeat;
     background-position: center;
   }
+}
+
+.click-helper {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
 }
 </style>

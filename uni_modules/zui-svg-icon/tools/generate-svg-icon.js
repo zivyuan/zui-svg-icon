@@ -145,8 +145,7 @@ const data = {
 };
 
 
-hasChange = JSON.stringify(svgLibCurrent) === JSON.stringify(data)
-
+const hasChange = JSON.stringify(svgLibCurrent) !== JSON.stringify(data)
 if (hasChange) {
   const script = [
     `/**

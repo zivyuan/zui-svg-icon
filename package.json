@@ -21,26 +21,29 @@
     "svgo": "^3.0.2"
   },
   "uni-app": {
-  	"scripts": {
-  		"mp-dingtalk": {
-  		"title":"钉钉小程序",
-  			"env": {
-  				"UNI_PLATFORM": "mp-alipay"
-  			},
-  			"define": {
-  				"MP-DINGTALK": true
-  			}
-  		},
-  		"mp-dingtalk-dev": {
-        "title":"钉钉小程序 (DEV)",
-          "env": {
-            "UNI_PLATFORM": "mp-alipay"
-          },
-          "define": {
-            "MP-DINGTALK": true,
-            "DEVELOPMENT": true
-          }
+    "scripts": {
+      "mp-dingtalk": {
+        "title": "钉钉小程序",
+        "env": {
+          "UNI_PLATFORM": "mp-alipay"
+        },
+        "define": {
+          "MP-DINGTALK": true
         }
-  	}
+      },
+      "mp-dingtalk-dev": {
+        "title": "钉钉小程序 (DEV)",
+        "env": {
+          "UNI_PLATFORM": "mp-alipay"
+        },
+        "define": {
+          "MP-DINGTALK": true,
+          "DEVELOPMENT": true
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "color": "^4.2.3"
   }
 }
