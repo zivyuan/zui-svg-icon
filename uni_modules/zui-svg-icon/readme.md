@@ -13,7 +13,10 @@
 <zui-svg-icon icon="doc" :color="['#FF0000', '#00FF00', '#0000FF']" />
 ```
 
-**DEMO:** [https://zivyuan.github.io/zui-svg-icon/](https://zivyuan.github.io/zui-svg-icon/)
+
+**H5演示:**
+[https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=uni-plugin-page)
+<img src="https://uni.imgozi.cn/imgtracker/qr-zui-svg-icon.png?utm_source=uni-plugin-page" width="256" />
 
 ## 小程序兼容性列表
 

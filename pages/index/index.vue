@@ -1,6 +1,6 @@
 <template>
   <view class="content">
-    <swiper :current="currentIcon" @change="onIconChange">
+    <swiper class="icon-swiper" :current="currentIcon" @change="onIconChange">
       <swiper-item v-for="icon in iconLib" :key="icon.key" class="icon-item">
         <view class="icon">
           <zui-svg-icon :icon="icon.key" :color="mapedColors" />
@@ -18,14 +18,14 @@
     <view class="color-slider">
       <slider
         :value="huePosition"
-        @change="updateIconColor"
+        @changing="onColorChange"
       />
       <text>拖动换色</text>
     </view>
 
     <view class="color-list">
       <view v-for="(color, idx) in currentColors" :key="idx" class="color-rect">
-        <view class="color-name">{{ color }}</view>
+        <view class="color-name"><text class="no">{{ (idx + 1) }}.</text>{{ color }}</view>
         <view class="color-origin" :style="`--bg-color: ${color}`"></view>
         <view class="color-changed" :style="`--bg-color: ${mapedColors[idx]}`"></view>
       </view>
@@ -52,7 +52,7 @@ export default {
     return {
       iconLib: lib,
       huePosition: 50,
-      currentIcon: 0,
+      currentIcon: 1,
       //
       colorMpaed: [],
     };
@@ -72,8 +72,7 @@ export default {
       return this.currentColors.map(item => {
         const c = Color(item).hsl()
         c.color[0] = (c.color[0] + pos) % 360
-        console.log('::>> ', item, ' .>> ', c.hsl())
-        return c.toString()
+        return c.rgb().toString()
       })
     }
   },
@@ -81,18 +80,17 @@ export default {
   onLoad() {},
 
   methods: {
-    updateIconColor(val) {
+    onColorChange(val) {
       this.huePosition = val.detail.value
     },
 
     onIconChange(slider) {
-      this.huePosition = 50
       this.currentIcon = slider.detail.current
     },
 
     doChangeIcon(idx) {
+      this.huePosition = 50
       this.currentIcon = idx
-      console.log('change icon to', this.currentIcon)
     }
   },
 };
@@ -100,7 +98,13 @@ export default {
 
 <style lang="scss">
 .content {
+  max-width: 828rpx;
   padding: 48rpx;
+  margin: 0 auto;
+}
+
+.icon-swiper {
+  height: 320rpx;
 }
 
 .title {
@@ -152,12 +156,19 @@ export default {
 
 .color-slider {
   margin-top: 48rpx;
-  margin-bottom: 96rpx;
+  margin-bottom: 72rpx;
   text-align: center;
   color: #AAA;
   font-size: 28rpx;
   letter-spacing: 4rpx;
   line-height: 2em;
+
+  ::v-deep {
+    .uni-slider-thumb {
+      border: 4rpx solid #Fff;
+      box-sizing: border-box;
+    }
+  }
 }
 
 .color-rect {
@@ -166,8 +177,17 @@ export default {
   margin: 16rpx 0;
 
   .color-name {
-    min-width: 160rpx;
+    min-width: 216rpx;
     color: #888;
+    margin-right: 0.5em;
+
+    .no {
+      width: 48rpx;
+      display: inline-block;
+      text-align: right;
+      opacity: 0.5;
+      margin-right: 8rpx;
+    }
   }
 
   .color-origin ,

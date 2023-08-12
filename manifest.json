@@ -82,7 +82,13 @@
     "h5" : {
         "router" : {
             "base" : "/zui-svg-icon/"
-        }
+        },
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : true
+            }
+        },
+        "template" : "template/h5.html"
     },
     "mp-qq" : {
         "appid" : "1112242173",

@@ -148,12 +148,10 @@ export default {
 
   methods: {
     doClick(evt) {
-      console.log('::>> doClick')
       this.$emit('click', evt)
     },
 
     doTap(evt) {
-      console.log('::>> doTap')
       this.$emit('tap', evt)
     },
 

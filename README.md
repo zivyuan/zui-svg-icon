@@ -13,7 +13,9 @@
 <zui-svg-icon icon="doc" :color="['#FF0000', '#00FF00', '#0000FF']" />
 ```
 
-
+**H5演示**
+[https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=github-readme)
+<img src="https://uni.imgozi.cn/imgtracker/qr-zui-svg-icon@github-readme.png?utm_source=github-readme" width="256" />
 
 ## 🐲 特色
 
