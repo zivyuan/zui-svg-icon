@@ -54,6 +54,11 @@ export default {
       type: Number,
       default: 1,
     },
+
+    gray: {
+      type: [Boolean, Number],
+      default: false
+    }
   },
 
   data() {
@@ -76,6 +81,13 @@ export default {
       return this.colorIdx;
     },
 
+    /**
+     * 是否文件来源
+     */
+    isFileSource() {
+      return !/^[\w-]+$/.test(this.icon)
+    },
+
     svgRaw() {
       const iconPreset = IconLib.icons[this.icon];
       if (!iconPreset)
@@ -94,6 +106,7 @@ export default {
     },
 
     svgDataurl() {
+      if (this.isFileSource) return this.icon
       return `data:image/svg+xml,${encodeURIComponent(this.svgRaw)}`
     },
 
@@ -109,6 +122,14 @@ export default {
         style["--zui-svg-icon-height"] = `${
           this.fixedHei * this.aspectRatio
         }px`;
+      }
+
+      if (this.gray) {
+        if (typeof this.gray === 'number') {
+          style['filter'] = `grayscale(${this.gray})`
+        } else {
+          style['filter'] = 'grayscale(1)'
+        }
       }
 
       // #ifndef MP-ALIPAY

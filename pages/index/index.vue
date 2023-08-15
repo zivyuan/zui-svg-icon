@@ -12,22 +12,38 @@
     </swiper>
 
     <view class="icon-list">
-      <zui-svg-icon v-for="(icon, idx) in iconLib" :key="icon.key" :icon="icon.key" @tap="doChangeIcon(idx)" />
+      <zui-svg-icon
+        v-for="(icon, idx) in iconLib"
+        :key="icon.key"
+        :icon="icon.key"
+        @tap="doChangeIcon(idx)"
+      />
     </view>
 
     <view class="color-slider">
-      <slider
-        :value="huePosition"
-        @changing="onColorChange"
-      />
+      <slider :value="huePosition" @changing="onColorChange" />
       <text>拖动换色</text>
     </view>
 
     <view class="color-list">
       <view v-for="(color, idx) in currentColors" :key="idx" class="color-rect">
-        <view class="color-name"><text class="no">{{ (idx + 1) }}.</text>{{ color }}</view>
+        <view class="color-name"
+          ><text class="no">{{ idx + 1 }}.</text>{{ color }}</view
+        >
         <view class="color-origin" :style="`--bg-color: ${color}`"></view>
-        <view class="color-changed" :style="`--bg-color: ${mapedColors[idx]}`"></view>
+        <view
+          class="color-changed"
+          :style="`--bg-color: ${mapedColors[idx]}`"
+        ></view>
+      </view>
+    </view>
+
+    <view class="img-icon-test">
+      <view class="img-icon-gallery-title">图片图标测试</view>
+      <view class="img-icon-gallery">
+        <view v-for="icon in imgIconLib" :key="icon.name" class="img-icon-item">
+          <zui-svg-icon :icon="icon.img" />
+        </view>
       </view>
     </view>
   </view>
@@ -36,7 +52,38 @@
 <script>
 import zuiSvgIcon from "../../uni_modules/zui-svg-icon/components/zui-svg-icon/zui-svg-icon.vue";
 import IconLib from "@/static/svg-icons-lib.js";
-import Color from 'color';
+import Color from "color";
+
+const imgIconLib = [
+  {
+    name: "a-uniapp",
+    img: require("../../static/images/a-uniapp.png"),
+  },
+  {
+    name: "b-google-play",
+    img: require("../../static/images/b-google-play.png"),
+  },
+  {
+    name: "c-instagram",
+    img: require("../../static/images/c-instagram.png"),
+  },
+  {
+    name: "m-doc",
+    img: require("../../static/images/m-doc.png"),
+  },
+  {
+    name: "m-pdf",
+    img: require("../../static/images/m-pdf.png"),
+  },
+  {
+    name: "m-ppt",
+    img: require("../../static/images/m-ppt.png"),
+  },
+  {
+    name: "m-xls",
+    img: require("../../static/images/m-xls.png"),
+  },
+];
 
 export default {
   components: {
@@ -51,6 +98,7 @@ export default {
 
     return {
       iconLib: lib,
+      imgIconLib,
       huePosition: 50,
       currentIcon: 1,
       //
@@ -60,38 +108,40 @@ export default {
 
   computed: {
     currentColors() {
-      const icon = this.iconLib[this.currentIcon]
-      const colors = icon.icon.slice(1).map(item => IconLib.$_colorPalette[item])
+      const icon = this.iconLib[this.currentIcon];
+      const colors = icon.icon
+        .slice(1)
+        .map((item) => IconLib.$_colorPalette[item]);
 
-      return colors
+      return colors;
     },
 
     mapedColors() {
-      const pos = this.huePosition / 100 * 360 + 180
+      const pos = (this.huePosition / 100) * 360 + 180;
 
-      return this.currentColors.map(item => {
-        const c = Color(item).hsl()
-        c.color[0] = (c.color[0] + pos) % 360
-        return c.rgb().toString()
-      })
-    }
+      return this.currentColors.map((item) => {
+        const c = Color(item).hsl();
+        c.color[0] = (c.color[0] + pos) % 360;
+        return c.rgb().toString();
+      });
+    },
   },
 
   onLoad() {},
 
   methods: {
     onColorChange(val) {
-      this.huePosition = val.detail.value
+      this.huePosition = val.detail.value;
     },
 
     onIconChange(slider) {
-      this.currentIcon = slider.detail.current
+      this.currentIcon = slider.detail.current;
     },
 
     doChangeIcon(idx) {
-      this.huePosition = 50
-      this.currentIcon = idx
-    }
+      this.huePosition = 50;
+      this.currentIcon = idx;
+    },
   },
 };
 </script>
@@ -143,7 +193,7 @@ export default {
   font-size: 48rpx;
   margin-top: 48rpx;
   text-align: center;
-  background: #FAFAFA;
+  background: #fafafa;
   padding-bottom: 12rpx;
   border-radius: 52rpx;
   padding: 0.4em 0;
@@ -158,14 +208,14 @@ export default {
   margin-top: 48rpx;
   margin-bottom: 72rpx;
   text-align: center;
-  color: #AAA;
+  color: #aaa;
   font-size: 28rpx;
   letter-spacing: 4rpx;
   line-height: 2em;
 
   ::v-deep {
     .uni-slider-thumb {
-      border: 4rpx solid #Fff;
+      border: 4rpx solid #fff;
       box-sizing: border-box;
     }
   }
@@ -190,14 +240,31 @@ export default {
     }
   }
 
-  .color-origin ,
+  .color-origin,
   .color-changed {
     width: 1em;
     height: 1em;
-    border: 1px solid #EEE;
+    border: 1px solid #eee;
     border-radius: 4rpx;
-    background-color: var(--bg-color, #EEE);
+    background-color: var(--bg-color, #eee);
     margin-right: 1em;
   }
+}
+
+.img-icon-test {
+  margin: 2em 0;
+}
+
+.img-icon-gallery-title {
+  margin-bottom: 0.4em;
+}
+
+.img-icon-gallery {
+  display: flex;
+}
+
+.img-icon-item {
+  font-size: 48rpx;
+  margin-right: 0.5em;
 }
 </style>
