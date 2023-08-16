@@ -1,17 +1,14 @@
 {
   "id": "zui-svg-icon",
   "displayName": "zui-svg-icon",
-  "version": "0.1.15",
-  "description": "一款适用于 uni-app 的 SVG 图标组件。除基础的图标显示之外, 还支持单色/多色图标换色。支持 uni-app APP端, h5端和微信小程序",
+  "version": "0.1.18",
+  "description": "一款适用于 uni-app 的 SVG 图标组件。全端适配：APP-Plus、小程序、H5 -支持单色、多色SVG图标； -支持URI和Base64格式； -支持spin动画； -SVG优化。",
   "keywords": [
-    "SVG图标",
-    "多色SVG",
-    "图标组件",
-    "图标换色"
+    "svg,图标,换色,icon"
 ],
   "repository": "https://github.com/zivyuan/zui-svg-icon.git",
   "engines": {
-    "HBuilderX": "^3.1.0"
+    "HBuilderX": "^3.8.7"
   },
   "dcloudext": {
     "type": "component-vue",

@@ -1,7 +1,10 @@
 <template>
-  <view class="zui-svg-icon" :style="style">
+  <view :class="clazz" :style="style">
+    <!-- #ifndef MP-WEIXIN || MP-LARK || MP-QQ -->
     <view v-if="useClick" class="click-helper" @click="doClick"></view>
     <view v-else class="click-helper" @tap="doTap"></view>
+    <!-- #endif -->
+
     <!-- #ifdef MP-ALIPAY -->
     <!-- 支付宝小程序不支持背景方式显示SVG -->
     <image
@@ -57,14 +60,25 @@ export default {
 
     gray: {
       type: [Boolean, Number],
-      default: false
-    }
+      default: false,
+    },
+
+    /**
+     * 图标旋转
+     *
+     * Boolean, true 旋转, 旋转一周时间 1s; false 不旋转, 默认值
+     * Number, 旋转一周所需要时间. > 0 顺时针旋转; < 0 逆时针旋转;
+     */
+    spin: {
+      type: [Number, Boolean],
+      default: false,
+    },
   },
 
   data() {
     return {
       isFilled: false,
-      fixedHei: 0,
+      fixedHei: 32,
       colorMap: {},
       colorPlaceholder: null,
       isColorCountMatch: true,
@@ -73,8 +87,8 @@ export default {
 
   computed: {
     useClick() {
-      const evt = Object.keys(this.$listeners || {})
-      return evt.includes('click')
+      const evt = Object.keys(this.$listeners || {});
+      return evt.includes("click");
     },
     // 返回色彩列表
     multiColors() {
@@ -85,10 +99,12 @@ export default {
      * 是否文件来源
      */
     isFileSource() {
-      return !/^[\w-]+$/.test(this.icon)
+      return !/^[\w-]+$/.test(this.icon);
     },
 
     svgRaw() {
+      if (this.isFileSource) return this.icon;
+
       const iconPreset = IconLib.icons[this.icon];
       if (!iconPreset)
         throw new Error(
@@ -98,16 +114,26 @@ export default {
 
       if (this.color && this.isColorCountMatch) {
         svg = svg.replace(this.colorPlaceholder, (_, a, b) => {
-          return this.colorMap["#" + a.toLowerCase()] + b;
+          return this.colorMap[a.toLowerCase()] + b;
         });
       }
 
-      return svg
+      return svg;
     },
 
     svgDataurl() {
-      if (this.isFileSource) return this.icon
-      return `data:image/svg+xml,${encodeURIComponent(this.svgRaw)}`
+      if (this.isFileSource) return this.icon;
+      return `data:image/svg+xml,${encodeURIComponent(this.svgRaw)}`;
+    },
+
+    clazz() {
+      const clazz = ["zui-svg-icon"]
+      if (this.spin && this.spin > 0)
+        clazz.push("rotate-clockwise")
+      if (this.spin && this.spin < 0)
+        clazz.push("rotate-counterclockwise")
+      // 必须转换成字符串, 不然 支付宝小程序 会以逗号连接类名导致错误
+      return clazz.join(' ');
     },
 
     style() {
@@ -125,17 +151,20 @@ export default {
       }
 
       if (this.gray) {
-        if (typeof this.gray === 'number') {
-          style['filter'] = `grayscale(${this.gray})`
+        if (typeof this.gray === "number") {
+          style["filter"] = `grayscale(${this.gray})`;
         } else {
-          style['filter'] = 'grayscale(1)'
+          style["filter"] = "grayscale(1)";
         }
       }
 
+      if (this.spin) {
+        const rotateDur = this.spin === true ? 5 : Math.abs(this.spin);
+        style["--zui-svg-icon-rotate-duration"] = `${rotateDur}s`;
+      }
+
       // #ifndef MP-ALIPAY
-      style[
-        "--zui-svg-icon-image"
-      ] = `url('${this.svgDataurl}')`;
+      style["--zui-svg-icon-image"] = `url('${this.svgDataurl}')`;
       // #endif
 
       // #ifdef MP
@@ -169,11 +198,11 @@ export default {
 
   methods: {
     doClick(evt) {
-      this.$emit('click', evt)
+      this.$emit("click", evt);
     },
 
     doTap(evt) {
-      this.$emit('tap', evt)
+      this.$emit("tap", evt);
     },
 
     initialIconSize() {
@@ -183,6 +212,8 @@ export default {
         .select(".zui-svg-icon")
         .fields({ size: true })
         .exec((rst) => {
+          if (!rst) return
+          if (!rst[0]) return
           this.fixedHei = rst[0].width;
         });
       // #endif
@@ -195,7 +226,7 @@ export default {
         const newColors =
           typeof this.color === "string" ? this.color.split(",") : this.color;
         this.colorPlaceholder = new RegExp(
-          `#(${oriColors.map((item) => item.slice(1)).join("|")})([^\\w])`,
+          `(${oriColors.map(item => item.replace(/([\(\)])/g, '\\$1')).join('|')})([^\\w])`,
           "gi"
         );
         this.colorMap = oriColors.reduce((a, b, idx) => {
@@ -228,6 +259,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@keyframes rotateClockwise {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotateCounterclockwise {
+  0% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(0);
+  }
+}
+
 .zui-svg-icon {
   --zui-svg-icon-height-auto: calc(
     var(--zui-svg-icon-width) * var(--zui-svg-icon-aspect-ratio)
@@ -252,6 +302,15 @@ export default {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
+  }
+
+  &.rotate-clockwise {
+    animation: rotateClockwise var(--zui-svg-icon-rotate-duration, 5s) linear
+      infinite;
+  }
+  &.rotate-counterclockwise {
+    animation: rotateCounterclockwise var(--zui-svg-icon-rotate-duration, 5s)
+      linear infinite;
   }
 }
 

@@ -30,19 +30,25 @@
         <view class="color-name"
           ><text class="no">{{ idx + 1 }}.</text>{{ color }}</view
         >
-        <view class="color-origin" :style="`--bg-color: ${color}`"></view>
+        <view class="color-origin" :style="'--bg-color: ' + color"></view>
         <view
           class="color-changed"
-          :style="`--bg-color: ${mapedColors[idx]}`"
+          :style="'--bg-color: ' + mapedColors[idx]"
         ></view>
       </view>
     </view>
 
     <view class="img-icon-test">
-      <view class="img-icon-gallery-title">图片图标测试</view>
+      <view class="img-icon-gallery-title"
+        >图票 URI 地址测试<text class="tips">(点击旋转)</text></view
+      >
       <view class="img-icon-gallery">
         <view v-for="icon in imgIconLib" :key="icon.name" class="img-icon-item">
-          <zui-svg-icon :icon="icon.img" />
+          <zui-svg-icon
+            :icon="icon.img"
+            :spin="spinIcon === icon.name && spinIconDur"
+            @tap="doIconSpin(icon)"
+          />
         </view>
       </view>
     </view>
@@ -57,31 +63,31 @@ import Color from "color";
 const imgIconLib = [
   {
     name: "a-uniapp",
-    img: require("../../static/images/a-uniapp.png"),
+    img: require("../../static/svg-icons/a-uniapp.svg"),
   },
   {
     name: "b-google-play",
-    img: require("../../static/images/b-google-play.png"),
+    img: require("../../static/svg-icons/b-google-play.svg"),
   },
   {
     name: "c-instagram",
-    img: require("../../static/images/c-instagram.png"),
+    img: require("../../static/svg-icons/c-instagram.svg"),
   },
   {
-    name: "m-doc",
-    img: require("../../static/images/m-doc.png"),
+    name: "chrome",
+    img: require("../../static/svg-icons/chrome.svg"),
   },
   {
-    name: "m-pdf",
-    img: require("../../static/images/m-pdf.png"),
+    name: "edge",
+    img: require("../../static/svg-icons/edge.svg"),
   },
   {
-    name: "m-ppt",
-    img: require("../../static/images/m-ppt.png"),
+    name: "firefox",
+    img: require("../../static/svg-icons/firefox.svg"),
   },
   {
-    name: "m-xls",
-    img: require("../../static/images/m-xls.png"),
+    name: "safari",
+    img: require("../../static/svg-icons/safari.svg"),
   },
 ];
 
@@ -103,6 +109,8 @@ export default {
       currentIcon: 1,
       //
       colorMpaed: [],
+      spinIcon: "",
+      spinIconDur: 0,
     };
   },
 
@@ -141,6 +149,15 @@ export default {
     doChangeIcon(idx) {
       this.huePosition = 50;
       this.currentIcon = idx;
+    },
+
+    doIconSpin(icon) {
+      if (this.spinIcon !== icon.name)
+        this.spinIconDur = 0
+      this.spinIcon = icon.name;
+
+      if (this.spinIconDur) this.spinIconDur = 0
+      else this.spinIconDur = Math.random() > 0.5 ? 2 : -2;
     },
   },
 };
@@ -227,7 +244,7 @@ export default {
   margin: 16rpx 0;
 
   .color-name {
-    min-width: 216rpx;
+    width: 100%;
     color: #888;
     margin-right: 0.5em;
 
@@ -242,6 +259,8 @@ export default {
 
   .color-origin,
   .color-changed {
+    flex-shrink: 0;
+    flex-grow: 0;
     width: 1em;
     height: 1em;
     border: 1px solid #eee;
@@ -257,6 +276,12 @@ export default {
 
 .img-icon-gallery-title {
   margin-bottom: 0.4em;
+
+  .tips {
+    font-size: 0.8em;
+    opacity: 0.5;
+    margin-left: 0.4em;
+  }
 }
 
 .img-icon-gallery {

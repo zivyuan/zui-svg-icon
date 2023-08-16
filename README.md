@@ -2,9 +2,17 @@
 
 一款适用于 uni-app 的 SVG 图标组件。
 
-**解决了 uni-app 在 APP 端中无法使用 SVG标签的问题**，在拉齐SVG图标显示问题的同时还支持单色图标换色、多色SVG图标显示、多色SVG图标换色。
+**解决了 uni-app 在 APP 端中无法使用 SVG标签的问题**
 
-使用简单：
+- 支持单色、多色 SVG 图标换色；
+- 支持图片 URI 地址；
+- 支持 Base64 图片格式；
+- 支持 spin 动画，可自定义旋转方向与速度；
+- SVG 图片优化。
+
+
+
+## 快速上手：
 
 ```html
 <!-- 单色图标 -->
@@ -13,17 +21,12 @@
 <zui-svg-icon icon="doc" :color="['#FF0000', '#00FF00', '#0000FF']" />
 ```
 
-**H5演示**
+### H5演示
+
 [https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=github-readme)
 <img src="https://uni.imgozi.cn/imgtracker/qr-zui-svg-icon@github-readme.png?utm_source=github-readme" width="256" />
 
-## 🐲 特色
 
-- 跨端支持。APP，H5，小程序一行代码搞定
-- 动态换色
-- 多色图标换色
-- 图标库生成工具
-- SVG图标优化
 
 
 ## 小程序兼容性列表
@@ -55,6 +58,8 @@
 | aspect-ratio | number | 图标比例. 默认为 1, 正方形 |
 | gray | boolean | 灰度显示, 默认: false |
 |  | number | 灰度比例, 范围: [0, 1] |
+| spin | boolean | 是否启用 spin 动画。默认 false |
+| | number | 动画时间。默认 5s，顺时针旋转；指定为负数时逆时针旋转；为 0 时禁用旋转效果，即 spin=false。 |
 
 
 ## 🎨 SVG 图标设计

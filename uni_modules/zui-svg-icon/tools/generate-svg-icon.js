@@ -72,17 +72,19 @@ svgList.forEach((item) => {
       let color = item[2];
 
       if (item[1] === "class") {
-        const clspos = result.data.indexOf(`.${item[2]}{`);
+        const clspos = result.data.indexOf(`.${item[2]}[,{]`);
         const clsend = result.data.indexOf("}", clspos);
-        const clrpos = result.data.indexOf("fill:#", clspos);
+        const clrpos = result.data.indexOf("fill:", clspos);
         if (clrpos < clsend) {
-          color = result.data
-            .substring(clrpos + 5, clrpos + 14)
-            .replace(/#([0-9a-z]+).*/gi, "#$1");
+          const str = result.data.substring(clrpos, clrpos + 40)
+          const matched = str.match(/fill:((?:rgba?|hsla?)\([\d,.]+\)|#[a-f0-9]+)/i)
+          if (matched && matched.length)
+            color = matched[0].substring(5)
         }
       } else if (item[1] === "style") {
-        if (/fill\:(#[0-9a-f]+)/i.test(item[2])) {
-          color = item[2].replace(/fill\:(#[0-9a-f]+)/i, "$1");
+        const matched = item[2].match(/fill:((?:rgba?|hsla?)\([\d,.]+\)|#[a-f0-9]+)/i)
+        if (matched && matched.length) {
+          color = matched[0].substring(5)
         } else {
           color = false;
         }
