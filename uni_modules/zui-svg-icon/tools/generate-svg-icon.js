@@ -53,11 +53,10 @@ svgList.forEach((item) => {
   if (!reg.test(item)) return;
 
   const name = item.slice(0, -4);
-  const svgContent = fs.readFileSync(svgPath + "/" + item);
+  let svgContent = fs.readFileSync(svgPath + "/" + item);
+  // svgo 会过滤纯黑, 此处对纯黑做简单处理
+  svgContent = (svgContent.toString()).replace(/#0{3,8}/g, '#000001').replace(/rgb\(0, *0, *0\)/gi, 'rgb(0,0,0.0039)')
   const result = optimize(svgContent, {
-    // optional but recommended field
-    // path: 'path-to.svg',
-    // all config fields are also available here
     multipass: true,
   });
 
@@ -80,6 +79,8 @@ svgList.forEach((item) => {
           const matched = str.match(/fill:((?:rgba?|hsla?)\([\d,.]+\)|#[a-f0-9]+)/i)
           if (matched && matched.length)
             color = matched[0].substring(5)
+        } else {
+          color = false
         }
       } else if (item[1] === "style") {
         const matched = item[2].match(/fill:((?:rgba?|hsla?)\([\d,.]+\)|#[a-f0-9]+)/i)
