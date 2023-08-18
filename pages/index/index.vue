@@ -22,7 +22,8 @@
 
     <view class="color-slider">
       <slider :value="huePosition" @changing="onColorChange" />
-      <text>拖动换色</text>
+      <view class="info">拖动换色</view>
+      <view class="comment">示例只实现色相变换，灰色、黑白将看不到效果</view>
     </view>
 
     <view class="color-list">
@@ -152,11 +153,10 @@ export default {
     },
 
     doIconSpin(icon) {
-      if (this.spinIcon !== icon.name)
-        this.spinIconDur = 0
+      if (this.spinIcon !== icon.name) this.spinIconDur = 0;
       this.spinIcon = icon.name;
 
-      if (this.spinIconDur) this.spinIconDur = 0
+      if (this.spinIconDur) this.spinIconDur = 0;
       else this.spinIconDur = Math.random() > 0.5 ? 2 : -2;
     },
   },
@@ -225,10 +225,20 @@ export default {
   margin-top: 48rpx;
   margin-bottom: 72rpx;
   text-align: center;
-  color: #aaa;
-  font-size: 28rpx;
-  letter-spacing: 4rpx;
-  line-height: 2em;
+
+  .info {
+    color: #aaa;
+    font-size: 28rpx;
+    letter-spacing: 4rpx;
+    line-height: 2em;
+  }
+
+  .comment {
+    font-size: 24rpx;
+    color: #aaa;
+    opacity: 0.5;
+    line-height: 1.6em;
+  }
 
   ::v-deep {
     .uni-slider-thumb {
