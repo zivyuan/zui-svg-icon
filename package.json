@@ -1,7 +1,7 @@
 {
   "name": "zui-svg-icon",
-  "version": "0.1.8",
-  "description": "一款适用于 uni-app 的 SVG 图标组件。 **uni-app全端适配：APP-Plus、小程序、H5** \n- 支持单色、多色 SVG 图标换色； \n- 支持图片 URI 地址； \n- 支持 Base64 图片格式； \n- 支持 spin 动画，可自定义旋转方向与速度； \n- SVG 图片优化。",
+  "version": "0.1.21",
+  "description": "一款适用于 uni-app 的 SVG 图标组件。全端适配：APP-Plus、小程序、H5 -支持单色、多色SVG图标； -支持URI和Base64格式； -支持spin动画； -SVG优化。",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
