@@ -1,9 +1,9 @@
 <template>
   <view :class="clazz" :style="style">
-    <!-- #ifndef MP-WEIXIN || MP-LARK || MP-QQ -->
-    <view v-if="useClick" class="click-helper" @click="doClick"></view>
-    <view v-else class="click-helper" @tap="doTap"></view>
-    <!-- #endif -->
+    <template v-if="clickHelper">
+      <view v-if="useClick" class="click-helper" @click="doClick"></view>
+      <view v-else class="click-helper" @tap="doTap"></view>
+    </template>
 
     <!-- #ifdef MP-ALIPAY -->
     <!-- 支付宝小程序不支持背景方式显示SVG -->
@@ -86,9 +86,27 @@ export default {
   },
 
   computed: {
+    clickHelper() {
+      let clickHelper = false
+      // #ifndef MP-WEIXIN || MP-LARK || MP-QQ
+      clickHelper = true
+      // #endif
+
+      // #ifdef VUE3
+      clickHelper = false
+      // #endif
+
+      return clickHelper
+    },
     useClick() {
+      // #ifdef VUE3
+      return this.$attrs && !!this.$attrs.onClick
+      // #endif
+
+      // #ifndef VUE3
       const evt = Object.keys(this.$listeners || {});
       return evt.includes("click");
+      // #endif
     },
     // 返回色彩列表
     multiColors() {
