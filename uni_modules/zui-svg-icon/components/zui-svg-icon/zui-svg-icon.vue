@@ -124,10 +124,12 @@ export default {
       if (this.isFileSource) return this.icon;
 
       const iconPreset = IconLib.icons[this.icon];
-      if (!iconPreset)
-        throw new Error(
+      if (!iconPreset) {
+        console.warn(
           `Svg icon [${this.icon}] not defined and no fallback icon set.`
-        );
+          );
+        return
+      }
       let svg = iconPreset[0];
 
       if (this.color && this.isColorCountMatch) {
