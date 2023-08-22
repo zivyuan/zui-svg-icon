@@ -73,6 +73,11 @@ export default {
       type: [Number, Boolean],
       default: false,
     },
+
+    /**
+     * 圆角设置
+     */
+    borderRadius: [Number, String],
   },
 
   data() {
@@ -87,20 +92,20 @@ export default {
 
   computed: {
     clickHelper() {
-      let clickHelper = false
+      let clickHelper = false;
       // #ifndef MP-WEIXIN || MP-LARK || MP-QQ
-      clickHelper = true
+      clickHelper = true;
       // #endif
 
       // #ifdef VUE3
-      clickHelper = false
+      clickHelper = false;
       // #endif
 
-      return clickHelper
+      return clickHelper;
     },
     useClick() {
       // #ifdef VUE3
-      return this.$attrs && !!this.$attrs.onClick
+      return this.$attrs && !!this.$attrs.onClick;
       // #endif
 
       // #ifndef VUE3
@@ -127,8 +132,8 @@ export default {
       if (!iconPreset) {
         console.warn(
           `Svg icon [${this.icon}] not defined and no fallback icon set.`
-          );
-        return
+        );
+        return;
       }
       let svg = iconPreset[0];
 
@@ -147,13 +152,11 @@ export default {
     },
 
     clazz() {
-      const clazz = ["zui-svg-icon"]
-      if (this.spin && this.spin > 0)
-        clazz.push("rotate-clockwise")
-      if (this.spin && this.spin < 0)
-        clazz.push("rotate-counterclockwise")
+      const clazz = ["zui-svg-icon"];
+      if (this.spin && this.spin > 0) clazz.push("rotate-clockwise");
+      if (this.spin && this.spin < 0) clazz.push("rotate-counterclockwise");
       // 必须转换成字符串, 不然 支付宝小程序 会以逗号连接类名导致错误
-      return clazz.join(' ');
+      return clazz.join(" ");
     },
 
     style() {
@@ -168,6 +171,27 @@ export default {
         style["--zui-svg-icon-height"] = `${
           this.fixedHei * this.aspectRatio
         }px`;
+      }
+
+      if (this.borderRadius) {
+        let br = this.borderRadius;
+        if (typeof this.borderRadius === "string") {
+          if (!/[^a-z%]/i.test(this.borderRadius)) {
+            const v = parseFloat(this.borderRadius);
+            if (v < 1) {
+              br = `${v * 100}%`;
+            } else {
+              br = `${v}px`;
+            }
+          }
+        } else {
+          if (this.borderRadius < 1) {
+            br = `${this.borderRadius * 100}%`;
+          } else {
+            br = `${this.borderRadius}px`;
+          }
+        }
+        style["--zui-svg-icon-border-radius"] = br;
       }
 
       if (this.gray) {
@@ -232,8 +256,8 @@ export default {
         .select(".zui-svg-icon")
         .fields({ size: true })
         .exec((rst) => {
-          if (!rst) return
-          if (!rst[0]) return
+          if (!rst) return;
+          if (!rst[0]) return;
           this.fixedHei = rst[0].width;
         });
       // #endif
@@ -246,7 +270,9 @@ export default {
         const newColors =
           typeof this.color === "string" ? this.color.split(",") : this.color;
         this.colorPlaceholder = new RegExp(
-          `(${oriColors.map(item => item.replace(/([\(\)])/g, '\\$1')).join('|')})([^\\w])`,
+          `(${oriColors
+            .map((item) => item.replace(/([\(\)])/g, "\\$1"))
+            .join("|")})([^\\w])`,
           "gi"
         );
         this.colorMap = oriColors.reduce((a, b, idx) => {
@@ -314,6 +340,8 @@ export default {
   // #endif
   line-height: 1;
   vertical-align: middle;
+  border-radius: var(--zui-svg-icon-border-radius, 0);
+  overflow: hidden;
 
   .zui-svg-icon-image {
     width: 100%;

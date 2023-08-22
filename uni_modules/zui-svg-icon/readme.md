@@ -12,7 +12,7 @@
 
 
 
-## 快速上手：
+## 🍏 快速上手：
 
 ```html
 <!-- 单色图标 -->
@@ -26,7 +26,7 @@
 [https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=uni-plugin-page)
 <img src="https://uni.imgozi.cn/imgtracker/qr-zui-svg-icon.png?utm_source=uni-plugin-page" width="256" />
 
-## 小程序兼容性列表
+## 🍎 小程序兼容性列表
 
 | 兼容性 | 小程序 | 说明 |
 | :---: | :--- | :--- |
@@ -45,7 +45,7 @@
 
 
 
-## 🍢 参数
+## 🍐 参数
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
@@ -58,11 +58,13 @@
 |  | number | 灰度比例, 范围: [0, 1] |
 | spin | boolean | 是否启用 spin 动画。默认 false |
 |  | number | 动画时间。默认 5s，顺时针旋转；指定为负数时逆时针旋转；为 0 时禁用旋转效果，即 spin=false。 |
+| borderRadius | number | 圆角数值，单位：像素。当输入值小于1当，作百分比处理 |
+| | string | CSS 允许的值 |
 
 
 
 
-## 🎨 SVG 图标设计
+## 🍊 SVG 图标设计
 
 ### 🤍 单色图标
 
@@ -91,7 +93,7 @@
 
 
 
-## 🤖 SVG 图标生成
+## 🍋 SVG 图标生成
 
 使用专用脚本生成 SVG 图标库。
 
@@ -138,6 +140,6 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 
 
 
-## 💎 支持
+## 🍓 支持
 
 如果组件对您有帮助，请不吝打赏。肥宅快乐水🥤是创作动力！🥤🥤🥤

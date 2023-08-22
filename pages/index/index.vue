@@ -21,7 +21,11 @@
     </view>
 
     <view class="color-slider">
-      <slider :value="huePosition" @changing="onColorChange" />
+      <slider
+        :value="huePosition"
+        @changing="onColorChange"
+        @change="onColorChange"
+      />
       <view class="info">拖动换色</view>
       <view class="comment">示例只实现色相变换，灰色、黑白将看不到效果</view>
     </view>
@@ -48,10 +52,16 @@
           <zui-svg-icon
             :icon="icon.img"
             :spin="spinIcon === icon.name && spinIconDur"
+            :border-radius="borderRadius"
             @tap="doIconSpin(icon)"
           />
         </view>
       </view>
+      <slider
+        :value="borderRadius"
+        @changing="onRadiusChange"
+        @change="onRadiusChange"
+      />
     </view>
   </view>
 </template>
@@ -112,6 +122,8 @@ export default {
       colorMpaed: [],
       spinIcon: "",
       spinIconDur: 0,
+
+      borderRadius: undefined,
     };
   },
 
@@ -158,6 +170,11 @@ export default {
 
       if (this.spinIconDur) this.spinIconDur = 0;
       else this.spinIconDur = Math.random() > 0.5 ? 2 : -2;
+    },
+
+    onRadiusChange(slider) {
+      const r = (slider.detail.value / 100) * 0.5;
+      this.borderRadius = r < 0.05 ? undefined : r;
     },
   },
 };
@@ -281,7 +298,7 @@ export default {
 }
 
 .img-icon-test {
-  margin: 2em 0;
+  margin: 2em 0 3em;
 }
 
 .img-icon-gallery-title {
@@ -296,6 +313,7 @@ export default {
 
 .img-icon-gallery {
   display: flex;
+  margin-bottom: 2em;
 }
 
 .img-icon-item {
