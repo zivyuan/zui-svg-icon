@@ -146,3 +146,8 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 来瓶肥宅快乐水🥤吧！
 
 <img src="./assets/doc/readme/WechatIMG131.jpg" alt="WechatIMG131"  width="256" />
+
+
+## 投票
+
+[投票](https://uni.imgozi.cn/zui-svg-icon?utm_source=dcooudio-plugin-market&utm_medium=zui-svg-icon-readme&utm_campaign=uniapp-usage-vote&utm_id=uniapp-usage-vote&utm_term=mp-weixin)

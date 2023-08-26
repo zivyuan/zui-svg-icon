@@ -74,33 +74,35 @@ import Color from "color";
 const imgIconLib = [
   {
     name: "a-uniapp",
-    img: require("../../static/svg-icons/a-uniapp.svg"),
+    img: "/static/svg-icons/a-uniapp.svg",
   },
   {
     name: "b-google-play",
-    img: require("../../static/svg-icons/b-google-play.svg"),
+    img: "/static/svg-icons/b-google-play.svg",
   },
   {
     name: "c-instagram",
-    img: require("../../static/svg-icons/c-instagram.svg"),
+    img: "/static/svg-icons/c-instagram.svg",
   },
   {
     name: "chrome",
-    img: require("../../static/svg-icons/chrome.svg"),
+    img: "/static/svg-icons/chrome.svg",
   },
   {
     name: "edge",
-    img: require("../../static/svg-icons/edge.svg"),
+    img: "/static/svg-icons/edge.svg",
   },
   {
     name: "firefox",
-    img: require("../../static/svg-icons/firefox.svg"),
+    img: "/static/svg-icons/firefox.svg",
   },
   {
     name: "safari",
-    img: require("../../static/svg-icons/safari.svg"),
+    img: "/static/svg-icons/safari.svg",
   },
 ];
+
+console.log('::>> def svg img', imgIconLib)
 
 export default {
   components: {
