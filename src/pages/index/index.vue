@@ -45,7 +45,7 @@
 
     <view class="img-icon-test">
       <view class="img-icon-gallery-title"
-        >图票 URI 地址测试<text class="tips">(点击旋转)</text></view
+        >图片 URI 地址测试<text class="tips">(点击旋转)</text></view
       >
       <view class="img-icon-gallery">
         <view v-for="icon in imgIconLib" :key="icon.name" class="img-icon-item">
@@ -58,7 +58,6 @@
         </view>
       </view>
       <slider
-        :value="borderRadius"
         @changing="onRadiusChange"
         @change="onRadiusChange"
       />
@@ -101,8 +100,6 @@ const imgIconLib = [
     img: "/static/svg-icons/safari.svg",
   },
 ];
-
-console.log('::>> def svg img', imgIconLib)
 
 export default {
   components: {
@@ -167,6 +164,7 @@ export default {
     },
 
     doIconSpin(icon) {
+      console.log(' toggle rotate', icon)
       if (this.spinIcon !== icon.name) this.spinIconDur = 0;
       this.spinIcon = icon.name;
 
@@ -185,7 +183,7 @@ export default {
 <style lang="scss">
 .content {
   max-width: 828rpx;
-  padding: 48rpx;
+  padding: 48rpx 48rpx 48rpx;
   margin: 0 auto;
 }
 

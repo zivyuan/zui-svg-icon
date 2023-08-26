@@ -11,8 +11,13 @@
 - SVG 图片优化。
 
 
+## 🍏 H5演示
 
-## 🍏 速上手：
+[https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=github-readme)
+<img src="https://uni.imgozi.cn/imgtracker/qr-zui-svg-icon@github-readme.png?utm_source=github-readme" width="128" />
+
+
+## 🍐 快速上手：
 
 ```html
 <!-- 单色图标 -->
@@ -20,11 +25,6 @@
 <!-- 多色图标 -->
 <zui-svg-icon icon="doc" :color="['#FF0000', '#00FF00', '#0000FF']" />
 ```
-
-### H5演示
-
-[https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=github-readme)
-<img src="https://uni.imgozi.cn/imgtracker/qr-zui-svg-icon@github-readme.png?utm_source=github-readme" width="256" />
 
 
 
@@ -47,7 +47,7 @@
 ☕🍻欢迎有兴趣的小伙伴一起完善小程序兼容性。🍻☕
 
 
-## 🍐  参数
+## 🍊 参数
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
@@ -64,7 +64,7 @@
 | | string | CSS 允许的值 |
 
 
-## 🍊  SVG 图标设计
+## 🍋 SVG 图标设计
 
 ### 🤍 单色图标
 
@@ -93,13 +93,13 @@
 
 
 
-## 🍋  SVG 图标生成
+## 🍋 SVG 图标生成
 
 使用专用脚本生成 SVG 图标库。
 
 
 
-### 0️⃣ 生成步骤
+### 🥑 生成步骤
 
 0. 安装依赖：`npm install svgo@latest --save-dev`
 1. 添加运行脚本：` "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
@@ -123,7 +123,7 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 
 
 
-### 🗄️ 文件位置说明
+### 🍍 文件位置说明
 
 #### SVG图标位置：
 

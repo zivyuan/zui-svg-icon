@@ -1,6 +1,6 @@
 {
   "name": "zui-svg-icon",
-  "version": "0.1.21",
+  "version": "0.1.28",
   "description": "🔥🔥🔥 一款适用于 uni-app 的 SVG 图标组件。全端适配：APP-Plus、小程序、H5 - 支持多色图标；- 支持URI和Base64；- 支持spin动画；",
   "main": "main.js",
   "keywords": [

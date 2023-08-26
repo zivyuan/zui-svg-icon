@@ -3,7 +3,8 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "多彩 SVG 图标示例"
+				"navigationBarTitleText": "多彩 SVG 图标示例",
+        "navigationBarTextStyle": "black"
 			}
 		}
 	],

@@ -2,7 +2,7 @@
 
 一款适用于 uni-app 的 SVG 图标组件。
 
-**uni-app全端适配：APP-Plus、小程序、H5**
+**解决了 uni-app 在 APP 端中无法使用 SVG标签的问题**
 
 - 支持单色、多色 SVG 图标换色；
 - 支持图片 URI 地址；
@@ -11,8 +11,13 @@
 - SVG 图片优化。
 
 
+## 🍏 H5演示
 
-## 🍏 快速上手：
+[https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=github-readme)
+<img src="https://uni.imgozi.cn/imgtracker/qr-zui-svg-icon@github-readme.png?utm_source=github-readme" width="128" />
+
+
+## 🍐 快速上手：
 
 ```html
 <!-- 单色图标 -->
@@ -21,12 +26,9 @@
 <zui-svg-icon icon="doc" :color="['#FF0000', '#00FF00', '#0000FF']" />
 ```
 
-### H5演示:
 
-[https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=uni-plugin-page)
-<img src="https://uni.imgozi.cn/imgtracker/qr-zui-svg-icon.png?utm_source=uni-plugin-page" width="256" />
 
-## 🍎 小程序兼容性列表
+## 🍎 程序兼容性列表
 
 | 兼容性 | 小程序 | 说明 |
 | :---: | :--- | :--- |
@@ -45,7 +47,8 @@
 
 
 
-## 🍐 参数
+
+## 🍊 参数
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
@@ -57,14 +60,22 @@
 | gray | boolean | 灰度显示, 默认: false |
 |  | number | 灰度比例, 范围: [0, 1] |
 | spin | boolean | 是否启用 spin 动画。默认 false |
-|  | number | 动画时间。默认 5s，顺时针旋转；指定为负数时逆时针旋转；为 0 时禁用旋转效果，即 spin=false。 |
+| | number | 动画时间。默认 5s，顺时针旋转；指定为负数时逆时针旋转；为 0 时禁用旋转效果，即 spin=false。 |
 | borderRadius | number | 圆角数值，单位：像素。当输入值小于1当，作百分比处理 |
 | | string | CSS 允许的值 |
 
 
+<span class="banner">
+<span class="surport">
+<a class="btn btn-support " data-toggle="modal" data-target="#support_modal" style="border: 1px solid #ec4d4d;letter-spacing: 1px;">
+  🍓🍇🍉  喜欢就打赏一下  🍒🍑🥭
+</a>
+</span>
+</span>
 
 
-## 🍊 SVG 图标设计
+
+## 🍋 SVG 图标设计
 
 ### 🤍 单色图标
 
@@ -99,7 +110,7 @@
 
 
 
-### 0️⃣ 生成步骤
+### 🥑 生成步骤
 
 0. 安装依赖：`npm install svgo@latest --save-dev`
 1. 添加运行脚本：` "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
@@ -122,8 +133,7 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 
 
 
-
-### 🗄️ 文件位置说明
+### 🍍 文件位置说明
 
 #### SVG图标位置：
 
@@ -140,6 +150,15 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 
 
 
+
 ## 🍓 支持
 
 如果组件对您有帮助，请不吝打赏。肥宅快乐水🥤是创作动力！🥤🥤🥤
+
+<span class="banner">
+<span class="surport">
+<a class="btn btn-support " data-toggle="modal" data-target="#support_modal" style="border: 1px solid #ec4d4d;letter-spacing: 1px;">
+  🍓🍇🍉  喜欢就打赏一下  🍒🍑🥭
+</a>
+</span>
+</span>

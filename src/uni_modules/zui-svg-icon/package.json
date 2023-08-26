@@ -1,14 +1,14 @@
 {
   "id": "zui-svg-icon",
   "displayName": "多彩SVG图标",
-  "version": "0.1.23",
+  "version": "0.1.26",
   "description": "🔥🔥🔥 一款适用于 uni-app 的 SVG 图标组件。全端适配：APP-Plus、小程序、H5。支持多色SVG图标；支持换色；支持URI和Base64格式；支持spin动画；SVG优化",
   "keywords": [
     "svg,图标,换色,icon"
 ],
   "repository": "https://github.com/zivyuan/zui-svg-icon.git",
   "engines": {
-    "HBuilderX": "^3.8.7"
+    "HBuilderX": "^3.4.15"
   },
   "dcloudext": {
     "type": "component-vue",

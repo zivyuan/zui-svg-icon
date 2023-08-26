@@ -1,25 +1,18 @@
 <template>
-  <view :class="clazz" :style="style">
-    <template v-if="clickHelper">
-      <view v-if="useClick" class="click-helper" @click="doClick"></view>
-      <view v-else class="click-helper" @tap="doTap"></view>
-    </template>
+  <view class="zui-svg-icon">
+    <view :class="clazz" :style="style">
+      <template v-if="clickHelper">
+        <view v-if="useClick" class="click-helper" @click="doClick"></view>
+        <view v-else class="click-helper" @tap="doTap"></view>
+      </template>
 
-    <!-- #ifdef MP-ALIPAY -->
-    <!-- 支付宝小程序不支持背景方式显示SVG -->
-    <image
-      class="zui-svg-icon-image"
-      :src="svgDataurl"
-      mode="aspectFit"
-    ></image>
-    <!-- #endif -->
-    <!-- #ifndef MP-ALIPAY -->
-    <image
-      class="zui-svg-icon-image"
-      src="../../static/zui-svg-icon/zui-svg-icon-placeholder.svg"
-      mode="aspectFit"
-    ></image>
-    <!-- #endif -->
+      <image
+        class="zui-svg-icon-image"
+        :src="svgDataurl"
+        mode="aspectFit"
+      ></image>
+    </view>
+
   </view>
 </template>
 
@@ -101,6 +94,10 @@ export default {
       clickHelper = false;
       // #endif
 
+      // #ifdef MP-ALIPAY
+      clickHelper = true;
+      // #endif
+
       return clickHelper;
     },
     useClick() {
@@ -152,7 +149,7 @@ export default {
     },
 
     clazz() {
-      const clazz = ["zui-svg-icon"];
+      const clazz = ['zui-svg-icon-wrapper'];
       if (this.spin && this.spin > 0) clazz.push("rotate-clockwise");
       if (this.spin && this.spin < 0) clazz.push("rotate-counterclockwise");
       // 必须转换成字符串, 不然 支付宝小程序 会以逗号连接类名导致错误
@@ -323,8 +320,11 @@ export default {
     transform: rotate(0);
   }
 }
-
 .zui-svg-icon {
+  position: relative;
+  display: inline-flex;
+}
+.zui-svg-icon-wrapper {
   --zui-svg-icon-height-auto: calc(
     var(--zui-svg-icon-width) * var(--zui-svg-icon-aspect-ratio)
   );
@@ -346,6 +346,7 @@ export default {
   .zui-svg-icon-image {
     width: 100%;
     height: 100%;
+    vertical-align: middle;
     background-image: var(--zui-svg-icon-image);
     background-size: contain;
     background-repeat: no-repeat;
