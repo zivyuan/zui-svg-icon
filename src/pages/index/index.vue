@@ -3,7 +3,7 @@
     <swiper class="icon-swiper" :current="currentIcon" @change="onIconChange">
       <swiper-item v-for="icon in iconLib" :key="icon.key" class="icon-item">
         <view class="icon">
-          <zui-svg-icon :icon="icon.key" :color="mapedColors" />
+          <zui-svg-icon :icon="icon.key" :color="mapedColorLib[currentIcon]" />
         </view>
         <view class="title">
           <text class="icon-code">{{ icon.key }}</text>
@@ -57,10 +57,7 @@
           />
         </view>
       </view>
-      <slider
-        @changing="onRadiusChange"
-        @change="onRadiusChange"
-      />
+      <slider @changing="onRadiusChange" @change="onRadiusChange" />
     </view>
   </view>
 </template>
@@ -117,8 +114,8 @@ export default {
       imgIconLib,
       huePosition: 50,
       currentIcon: 1,
+      mapedColorLib: [],
       //
-      colorMpaed: [],
       spinIcon: "",
       spinIconDur: 0,
 
@@ -133,17 +130,19 @@ export default {
         .slice(1)
         .map((item) => IconLib.$_colorPalette[item]);
 
+      this.mapedColorLib[this.currentIcon] = colors;
       return colors;
     },
 
     mapedColors() {
       const pos = (this.huePosition / 100) * 360 + 180;
-
-      return this.currentColors.map((item) => {
+      this.mapedColorLib[this.currentIcon] = this.currentColors.map((item) => {
         const c = Color(item).hsl();
         c.color[0] = (c.color[0] + pos) % 360;
         return c.rgb().toString();
       });
+
+      return this.mapedColorLib[this.currentIcon];
     },
   },
 
@@ -156,6 +155,7 @@ export default {
 
     onIconChange(slider) {
       this.currentIcon = slider.detail.current;
+      console.log('::>> mapedColorLib ', this.mapedColorLib)
     },
 
     doChangeIcon(idx) {
@@ -164,7 +164,7 @@ export default {
     },
 
     doIconSpin(icon) {
-      console.log(' toggle rotate', icon)
+      console.log(" toggle rotate", icon);
       if (this.spinIcon !== icon.name) this.spinIconDur = 0;
       this.spinIcon = icon.name;
 

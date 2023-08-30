@@ -51,7 +51,7 @@
     "build:quickapp-webview": "uni build -p quickapp-webview",
     "build:quickapp-webview-huawei": "uni build -p quickapp-webview-huawei",
     "build:quickapp-webview-union": "uni build -p quickapp-webview-union",
-    "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"
+    "svgicon": "node ./src/uni_modules/zui-svg-icon/tools/generate-svg-icon.js"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-3081220230817001",
@@ -79,6 +79,7 @@
     "@dcloudio/vite-plugin-uni": "3.0.0-3081220230817001",
     "@vue/runtime-core": "^3.2.45",
     "sass": "^1.66.1",
+    "svgo": "^3.0.2",
     "vite": "4.1.4"
   },
   "uni-app": {

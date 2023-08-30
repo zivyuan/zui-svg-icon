@@ -12,7 +12,6 @@
         mode="aspectFit"
       ></image>
     </view>
-
   </view>
 </template>
 
@@ -149,7 +148,7 @@ export default {
     },
 
     clazz() {
-      const clazz = ['zui-svg-icon-wrapper'];
+      const clazz = ["zui-svg-icon-wrapper"];
       if (this.spin && this.spin > 0) clazz.push("rotate-clockwise");
       if (this.spin && this.spin < 0) clazz.push("rotate-counterclockwise");
       // 必须转换成字符串, 不然 支付宝小程序 会以逗号连接类名导致错误
@@ -275,7 +274,7 @@ export default {
         this.colorMap = oriColors.reduce((a, b, idx) => {
           return {
             ...a,
-            [b]: newColors[idx] || oriColors[0],
+            [b.toLowerCase()]: newColors[idx] || oriColors[0],
           };
         }, {});
         this.isColorCountMatch = oriColors.length === newColors.length;

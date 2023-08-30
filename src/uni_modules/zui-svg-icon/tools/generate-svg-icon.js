@@ -38,7 +38,7 @@ const svgLibCurrent = (() => {
     let raw = fs.readFileSync(svgLibFile, { encoding: "utf-8" });
     raw = raw.substring(raw.indexOf("export default") + 15);
     return JSON.parse(raw).icons;
-  } catch (err) {}
+  } catch (err) { }
   return {};
 })();
 const svgPath = path.resolve(svgFolder);
@@ -46,77 +46,97 @@ const svgLib = {};
 const svgList = fs.readdirSync(svgPath);
 const reg = /\.svg$/i;
 
-const palette = [];
-const strokeWarn = [];
+let palette = [];
 
 svgList.forEach((item) => {
   if (!reg.test(item)) return;
 
   const name = item.slice(0, -4);
+
+  // if (name !== 'a-uniapp') return
+
   let svgContent = fs.readFileSync(svgPath + "/" + item);
   // svgo 会过滤纯黑, 此处对纯黑做简单处理
-  svgContent = (svgContent.toString()).replace(/#0{3,8}/g, '#000001').replace(/rgb\(0, *0, *0\)/gi, 'rgb(0,0,0.0039)')
+  svgContent = (svgContent.toString()).replace(/#0{3,8}/g, '#ZZZZZZ')
   const result = optimize(svgContent, {
     multipass: true,
   });
+  result.data = result.data.replace(/#Z{3,8}/gi, '#000');
+  svgLib[name] = result.data
 
-  svgLib[name] = result.data;
-
-  // fill, stroke 等
-  const regColorProps = /(fill|stroke|class|style)="([^"]+)"/g;
-  let colors = [...result.data.matchAll(regColorProps)]
-    .map((item) => {
-      if (item[2] === "none") return false;
-
-      let color = item[2];
-
-      if (item[1] === "class") {
-        const clspos = result.data.indexOf(`.${item[2]}[,{]`);
-        const clsend = result.data.indexOf("}", clspos);
-        const clrpos = result.data.indexOf("fill:", clspos);
-        if (clrpos < clsend) {
-          const str = result.data.substring(clrpos, clrpos + 40)
-          const matched = str.match(/fill:((?:rgba?|hsla?)\([\d,.]+\)|#[a-f0-9]+)/i)
-          if (matched && matched.length)
-            color = matched[0].substring(5)
-        } else {
-          color = false
-        }
-      } else if (item[1] === "style") {
-        const matched = item[2].match(/fill:((?:rgba?|hsla?)\([\d,.]+\)|#[a-f0-9]+)/i)
-        if (matched && matched.length) {
-          color = matched[0].substring(5)
-        } else {
-          color = false;
-        }
-      } else if (item[1] === "fill") {
-        if (/^url/i.test(item[2])) color = false;
-      }
-
-      if (color) {
-        color = color.toLowerCase();
-
-        if (!palette.includes(color)) {
-          palette.push(color);
-        }
-      }
-
-      return color;
-    })
-    .filter((item) => !!item);
-  // 渐变颜色
-  //  <stop offset="0.36" stop-color="#ee2a7b"/>
-  //  <stop offset="0" style="stop-color:#000000;stop-opacity:0.1"/>
-  const regColorGradient =
-    /(stop-color|style)="[^" ]*(?:stop-color:)?(#[0-9a-f]{3,8})"/g;
-  const gradientColors = [...result.data.matchAll(regColorGradient)].map(
-    (item) => {
-      if (!palette.includes(item[2])) palette.push(item[2]);
-      return item[2];
+  const regColor = /(fill|stroke|stop-color):([^;}]+)/g
+  const parseColor = (colorStr) => {
+    if (!regRef.test(colorStr)) {
+      return colorStr
     }
-  );
-  colors.push(...gradientColors);
-  colors = Array.from(new Set(colors));
+    // 从 Gradient 引用里获取颜色
+    const match = colorStr.match(regRef)
+    const ref = gradients.find(item => {
+      return item.id === match[1]
+    })
+    return ref ? ref.colors : []
+  }
+
+  // Step 1, find all Gradient define and make KV map
+  const regGradient = /<(\w+Gradient) id="([^"]+)" [^>]+>(.+?)<\/\1>/g
+  const regStopColors = /stop-color="([^"]+)"/g
+  const gradients = [...result.data.matchAll(regGradient)]
+    .map(item => {
+      const colors = [...item[3].matchAll(regStopColors)].map(item => item[1])
+      return {
+        id: item[2],
+        content: item[3],
+        colors,
+      }
+    })
+
+  // Step 2, find all class define and make KV map
+  const regClass = /\.(cls-\d+)\{([^}]+)\}/g
+  const regRef = /url\(#(.+)\)/
+  const classes = [...result.data.matchAll(regClass)]
+    .map(item => {
+      // Search colors from item[2]
+      // find fill, stroke, stop-color
+      const colors = [...item[2].matchAll(regColor)].map(item => parseColor(item[2]))
+
+      return {
+        id: item[1],
+        content: item[2],
+        colors: colors,
+      }
+    })
+
+  // Step 3, find all style, class, stroke property and search color in value
+  const regProps = /(fill|stroke|class|style)="([^"]+)"/g
+  const props = [...result.data.matchAll(regProps)]
+    .map(content => {
+      let colors = []
+      if (content[1] === 'class') {
+        const item = classes.find(item => item.id === content[2])
+        colors = item ? item.colors : []
+      } else if (content[1] === 'style') {
+        colors = [...content[2].matchAll(regColor)].map(item => parseColor(item[2]))
+      } else if (content[1] === 'fill') {
+        colors = parseColor(content[2])
+      } else {
+        colors = content[2]
+      }
+      return {
+        prop: content[1],
+        content: content[2],
+        // 定义里的颜色
+        colors: colors,
+      }
+    })
+
+  // Step 4, filter
+  let colors = props.map(item => item.colors).flat(2).filter(item => item !== 'none')
+  colors = Array.from(new Set(colors))
+
+  // Append new colors to palette
+  palette = Array.from(new Set([...palette, ...colors]))
+
+  // Build color index
   const colorMap = colors.map((c) => palette.indexOf(c));
   const colorTotal = colors.length;
 
@@ -124,23 +144,11 @@ svgList.forEach((item) => {
   if (colorTotal === 0) {
     console.log("    ", "!!! 图标没有颜色定义, 将不支持改色. !!!");
   } else if (colorTotal > 0) {
-    console.log("    ", colors);
-  }
-
-  if (/stroke(?:-width)?="/i.test(result.data)) {
-    strokeWarn.push(name);
+    console.log("    ", JSON.stringify(colors));
   }
 
   svgLib[name] = [result.data, ...colorMap];
 });
-
-if (strokeWarn.length) {
-  console.log(
-    "\n以下图标含有描边, 在缩放时可能导致非预期效果。建议将描边全部转换为填充。"
-  );
-  console.log("\n", strokeWarn.join(", "), "\n");
-}
-
 
 const data = {
   icons: JSON.parse(JSON.stringify(svgLib)),
@@ -167,8 +175,7 @@ if (hasChange) {
   ];
   fs.writeFileSync(svgLibFile, script.join("\n"));
   console.log(
-    `\nTotal ${
-      Object.keys(svgLib).length
+    `\nTotal ${Object.keys(svgLib).length
     } svg icon(s) generated.`
   );
 } else {
