@@ -203,23 +203,9 @@ export default {
         style["--zui-svg-icon-rotate-duration"] = `${rotateDur}s`;
       }
 
-      // #ifndef MP-ALIPAY
-      style["--zui-svg-icon-image"] = `url('${this.svgDataurl}')`;
-      // #endif
-
-      // #ifdef MP
-
       return Object.keys(style)
         .map((key) => `${key}:${style[key]}`)
         .join("; ");
-
-      // #endif
-
-      // #ifndef MP
-
-      return style;
-
-      // #endif
     },
   },
 
@@ -346,10 +332,6 @@ export default {
     width: 100%;
     height: 100%;
     vertical-align: middle;
-    background-image: var(--zui-svg-icon-image);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
   }
 
   &.rotate-clockwise {
