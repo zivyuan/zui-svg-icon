@@ -14,4 +14,13 @@ export default {
 
 <style>
 /*每个页面公共css */
+page {
+  background-image: url('@/static/bg.jpg');
+    background-position: right top;
+    background-size: auto 100vh;
+    background-attachment: fixed;
+}
+uni-page-body {
+  background-image: none;
+}
 </style>

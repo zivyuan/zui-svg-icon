@@ -11,10 +11,17 @@
 - SVG 图片优化。
 
 
-## 🍏 H5演示
 
-[https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=github-readme)
-<img src="https://uni.imgozi.cn/imgtracker/qr-zui-svg-icon@github-readme.png?utm_source=github-readme" width="128" />
+## 🍏 在线演示
+
+**[💻 点我在浏览器里预览 https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=uni-plugin-market&utm_medium=readme&utm_campaign=zui-svg-icon&utm_id=uni-plugin)**
+
+PS: 启动浏览器预览需要打开手机模器
+
+**[📱 扫码体验](https://uni.imgozi.cn/zui-svg-icon/?utm_source=uni-plugin-market&utm_medium=readme&utm_campaign=zui-svg-icon&utm_id=uni-plugin)**
+
+<img src="https://uni.imgozi.cn/zui-svg-icon/static/preview-qr.png" width="128" />
+
 
 
 ## 🍐 快速上手：

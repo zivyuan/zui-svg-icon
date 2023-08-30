@@ -9,6 +9,9 @@
 		}
 	],
 	"globalStyle": {
+    // #ifdef H5
+		"navigationStyle": "custom",
+    // #endif
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "多彩 SVG 图标示例",
 		"navigationBarBackgroundColor": "#F8F8F8",
