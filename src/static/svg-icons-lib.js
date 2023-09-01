@@ -6,7 +6,7 @@
  *
  * !!! DO NOT MODIFY MANUALLY !!!
  *
- * @datetime 2023/8/30 20:21:19
+ * @datetime 2023/9/1 15:47:53
  *
  */
 
@@ -128,6 +128,7 @@ export default {
       25
     ]
   },
+  "currentColor": "#2B9939",
   "$_colorPalette": [
     "#2B9939",
     "#29B6F6",
