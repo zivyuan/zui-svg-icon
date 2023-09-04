@@ -1,10 +1,9 @@
 <template>
   <view class="zui-svg-icon">
     <view :class="clazz" :style="style">
-      <template v-if="clickHelper">
-        <view v-if="useClick" class="click-helper" @click="doClick"></view>
-        <view v-else class="click-helper" @tap="doTap"></view>
-      </template>
+      <!-- #ifndef H5 -->
+      <view class="click-helper" @click="doClick" @tap="doTap"></view>
+      <!-- #endif -->
 
       <image
         class="zui-svg-icon-image"
@@ -83,32 +82,6 @@ export default {
   },
 
   computed: {
-    clickHelper() {
-      let clickHelper = false;
-      // #ifndef MP-WEIXIN || MP-LARK || MP-QQ
-      clickHelper = true;
-      // #endif
-
-      // #ifdef VUE3
-      clickHelper = false;
-      // #endif
-
-      // #ifdef MP-ALIPAY
-      clickHelper = true;
-      // #endif
-
-      return clickHelper;
-    },
-    useClick() {
-      // #ifdef VUE3
-      return this.$attrs && !!this.$attrs.onClick;
-      // #endif
-
-      // #ifndef VUE3
-      const evt = Object.keys(this.$listeners || {});
-      return evt.includes("click");
-      // #endif
-    },
     // 返回色彩列表
     multiColors() {
       return this.colorIdx;
@@ -224,11 +197,18 @@ export default {
 
   methods: {
     doClick(evt) {
-      this.$emit("click", evt);
+      // #ifdef MP-ALIPAY || MP-DINTTALK || MP-DINGDING
+      this.$emit("tap", evt);
+      // #endif
+      setTimeout(() => {
+        this.$emit("click", evt);
+      }, 1)
     },
 
     doTap(evt) {
-      this.$emit("tap", evt);
+      setTimeout(() => {
+        this.$emit("click", evt);
+      }, 1)
     },
 
     initialIconSize() {

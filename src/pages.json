@@ -6,6 +6,12 @@
 				"navigationBarTitleText": "多彩 SVG 图标示例",
         "navigationBarTextStyle": "black"
 			}
+		},{
+			"path": "pages/click/click",
+			"style": {
+				"navigationBarTitleText": "点击兼容性测试",
+        "navigationBarTextStyle": "black"
+			}
 		}
 	],
 	"globalStyle": {
