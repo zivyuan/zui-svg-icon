@@ -82,11 +82,6 @@ export default {
   },
 
   computed: {
-    // 返回色彩列表
-    multiColors() {
-      return this.colorIdx;
-    },
-
     /**
      * 是否文件来源
      */
@@ -228,7 +223,7 @@ export default {
     initialIconColor() {
       // Initial color map
       const oriColors = this.getOriginalColors();
-      if (this.color) {
+      if (this.color && oriColors.length) {
         const newColors =
           typeof this.color === "string" ? this.color.split(",") : this.color;
         this.colorPlaceholder = new RegExp(

@@ -184,8 +184,8 @@ let currentColor = svgLibCurrent.currentColor ? svgLibCurrent.currentColor : '';
     let colors = props
       .map((item) => item.colors)
       .flat(2)
+      .filter((item) => item !== "none" && !/^url/.test(item))
       .map(item => item === 'currentColor' ? currentColor : item)
-      .filter((item) => item !== "none");
     colors = Array.from(new Set(colors));
 
     // Append new colors to palette
