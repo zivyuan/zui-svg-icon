@@ -71,7 +71,6 @@ PS: 启动浏览器预览需要打开手机模器
 | borderRadius | number | 圆角数值，单位：像素。当输入值小于1当，作百分比处理 |
 | | string | CSS 允许的值 |
 
-
 <span class="banner">
 <span class="surport">
 <a class="btn btn-support " data-toggle="modal" data-target="#support_modal" style="border: 1px solid #ec4d4d;letter-spacing: 1px;">
@@ -79,6 +78,16 @@ PS: 启动浏览器预览需要打开手机模器
 </a>
 </span>
 </span>
+
+
+
+### 🍒 颜色锁定功能
+
+在配置 color 时，将对应位置的颜色设置为空时，将保留原来的颜色。
+
+『空值』是以下值中的任意一种：
+
+`空字符串, null, undefined, false, 0`
 
 
 

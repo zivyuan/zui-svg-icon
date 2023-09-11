@@ -235,7 +235,7 @@ export default {
         this.colorMap = oriColors.reduce((a, b, idx) => {
           return {
             ...a,
-            [b.toLowerCase()]: newColors[idx] || oriColors[0],
+            [b.toLowerCase()]: newColors[idx] || oriColors[idx],
           };
         }, {});
         this.isColorCountMatch = oriColors.length === newColors.length;
