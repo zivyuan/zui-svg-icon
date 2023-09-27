@@ -59,6 +59,9 @@ PS: 启动浏览器预览需要打开手机模器
 | 参数 | 类型 | 说明 |
 |---|---|---|
 | icon | string | 图标 id, 同图标文件名 |
+|  | string | svg 源码字符串|
+|  | string | 图片 URI |
+|  | string | Data URI |
 | color | string  | 单色图标颜色 |
 |  | string[] | 多色图标颜色, 颜色种类必须与图标中的种类一致<br/>[了解多色图标👇🏻](#❤️‍🔥-多色图标) |
 | width | string \| number | 图标宽度. 默认 1.2em. |
@@ -70,6 +73,8 @@ PS: 启动浏览器预览需要打开手机模器
 | borderRadius | number | 圆角数值，单位：像素。当输入值小于1当，作百分比处理 |
 | | string | CSS 允许的值 |
 
+> 说明:
+>   当 icon 配置为 svg 源码字符串，图片URI，Data URI 时，图标不支持修改颜色
 
 
 ### 🍒 颜色锁定功能
@@ -186,10 +191,3 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 ## 🍓 支持
 
 来瓶肥宅快乐水🥤吧！
-
-<img src="./assets/doc/readme/WechatIMG131.jpg" alt="WechatIMG131"  width="256" />
-
-
-## 投票
-
-[投票](https://uni.imgozi.cn/zui-svg-icon?utm_source=dcooudio-plugin-market&utm_medium=zui-svg-icon-readme&utm_campaign=uniapp-usage-vote&utm_id=uniapp-usage-vote&utm_term=mp-weixin)

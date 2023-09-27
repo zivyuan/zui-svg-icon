@@ -84,6 +84,8 @@ export default {
   computed: {
     /**
      * 是否文件来源
+     *
+     * 包含 url, svg原始字符串, 未进行 base64 编码的 data:image/svg+xml uri
      */
     isFileSource() {
       return !/^[\w-]+$/.test(this.icon);
@@ -111,8 +113,21 @@ export default {
     },
 
     svgDataurl() {
-      if (this.isFileSource) return this.icon;
-      return `data:image/svg+xml,${encodeURIComponent(this.svgRaw)}`;
+      if (!this.isFileSource) {
+        return `data:image/svg+xml,${encodeURIComponent(this.svgRaw)}`;
+      }
+
+      if (/^data:image\/svg\+xml,<svg/i.test(this.icon)) {
+        return `data:image/svg+xml,${encodeURIComponent(
+          this.icon.substring(19)
+        )}`;
+      }
+
+      if (/^<svg/i.test(this.icon)) {
+        return `data:image/svg+xml,${encodeURIComponent(this.icon)}`;
+      }
+
+      return this.icon;
     },
 
     clazz() {
@@ -197,13 +212,13 @@ export default {
       // #endif
       setTimeout(() => {
         this.$emit("click", evt);
-      }, 1)
+      }, 1);
     },
 
     doTap(evt) {
       setTimeout(() => {
         this.$emit("click", evt);
-      }, 1)
+      }, 1);
     },
 
     initialIconSize() {
