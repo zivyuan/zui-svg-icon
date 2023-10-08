@@ -163,6 +163,7 @@ PS: 启动浏览器预览需要打开手机模器
 
 0. 安装依赖：`npm install svgo@latest --save-dev`
 1. 添加运行脚本：` "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
+   1. cli 项目运行脚本：` "svgicon": "node ./src/uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
 2. 将 SVG 图标复制到 **图标保存位置**
 3. 运行脚本 `npm run svgicon`
 4. 结束！
@@ -191,6 +192,9 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 #### 脚本位置：
 
 `/uni_modules/zui-svg-icon/tools/generate-svg-icon.js`
+
+CLI 项目脚本位置:
+`/src/uni_modules/zui-svg-icon/tools/generate-svg-icon.js`
 
 #### 图标库位置：
 
