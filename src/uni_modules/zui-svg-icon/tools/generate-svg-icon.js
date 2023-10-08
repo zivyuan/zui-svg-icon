@@ -59,9 +59,9 @@ const svgLibCurrent = (() => {
 })();
 const svgPath = path.resolve(svgFolder);
 const svgLib = {};
-const svgList = fs.readdirSync(svgPath).map(item => {
+const svgList = fs.readdirSync(svgPath, {recursive: true}).map(item => {
   if (!regFile.test(item)) return null;
-  const name = item.slice(0, -4);
+  const name = item.slice(0, -4).replace(/\//g, '-');
   const content = fs.readFileSync(svgPath + "/" + item).toString();
 
   return {
