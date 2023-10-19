@@ -64,7 +64,7 @@
 
 <script>
 import zuiSvgIcon from "../../uni_modules/zui-svg-icon/components/zui-svg-icon/zui-svg-icon.vue";
-import IconLib from "@/static/svg-icons-lib.js";
+import { SvgIconLib as IconLib } from "@/static/svg-icons-lib.js";
 import Color from "color";
 
 const imgIconLib = [

@@ -6,11 +6,11 @@
  *
  * !!! DO NOT MODIFY MANUALLY !!!
  *
- * @datetime 2023/10/8 21:33:00
+ * @datetime 2023/10/19 21:02:16
  *
  */
 
-export default {
+const svglib = {
   "icons": {
     "a-uniapp": [
       "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"72\" height=\"72\"><path fill=\"#2B9939\" fill-rule=\"evenodd\" d=\"M68 0a4 4 0 0 1 4 4v64a4 4 0 0 1-4 4H4a4 4 0 0 1-4-4V4a4 4 0 0 1 4-4h64ZM24 18h-7v39h38V18h-7v32H24V18Z\"/></svg>",
@@ -220,4 +220,7 @@ export default {
     "#f4f2f3",
     "#ff5150"
   ]
-}
+};
+
+export const SvgIconLib = svglib;
+export default SvgIconLib;

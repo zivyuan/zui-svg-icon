@@ -52,7 +52,9 @@ const svgLibFile = svgBase + "/svg-icons-lib.js";
 const svgLibCurrent = (() => {
   try {
     let raw = fs.readFileSync(svgLibFile, { encoding: "utf-8" });
-    raw = raw.substring(raw.indexOf("export default") + 15);
+    const start = raw.indexOf("const svglib") + 15
+    const end = raw.indexOf('export const')
+    raw = raw.substring(start, end).trim().replace(/;$/, '');
     return JSON.parse(raw);
   } catch (err) { }
   return {};
@@ -226,7 +228,11 @@ let currentColor = svgLibCurrent.currentColor ? svgLibCurrent.currentColor : '';
  *
  */`,
       "",
-      "export default " + JSON.stringify(data, null, 2),
+      `const svglib = ${JSON.stringify(data, null, 2)};
+
+export const SvgIconLib = svglib;
+export default SvgIconLib;
+`
     ];
     fs.writeFileSync(svgLibFile, script.join("\n"));
     console.log(`\nTotal ${Object.keys(svgLib).length} svg icon(s) generated.`);

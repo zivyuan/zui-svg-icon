@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import IconLib from "@/static/svg-icons-lib.js";
+import { SvgIconLib as IconLib } from "@/static/svg-icons-lib.js";
 
 const ThePalette = IconLib.$_colorPalette;
 
