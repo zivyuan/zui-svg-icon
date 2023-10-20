@@ -82,19 +82,19 @@ const imgIconLib = [
   },
   {
     name: "chrome",
-    img: "/static/svg-icons/chrome.svg",
+    img: "/static/svg-icons/browser/chrome.svg",
   },
   {
     name: "edge",
-    img: "/static/svg-icons/edge.svg",
+    img: "/static/svg-icons/browser/edge.svg",
   },
   {
     name: "firefox",
-    img: "/static/svg-icons/firefox.svg",
+    img: "/static/svg-icons/browser/firefox.svg",
   },
   {
     name: "safari",
-    img: "/static/svg-icons/safari.svg",
+    img: "/static/svg-icons/browser/safari.svg",
   },
 ];
 
