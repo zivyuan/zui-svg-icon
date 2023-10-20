@@ -171,9 +171,12 @@ PS: 启动浏览器预览需要打开手机模器
 ### 🥑 生成步骤
 
 0. 安装依赖：`npm install svgo@latest --save-dev`
-1. 添加运行脚本：` "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
-   1. cli 项目运行脚本：` "svgicon": "node ./src/uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
+1. 添加运行脚本
+   1. HBuilderX 项目：` "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
+   2. cli 项目：` "svgicon": "node ./src/uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
 2. 将 SVG 图标复制到 **图标保存位置**
+   1. HBuilderX 项目：`/static/svg-icons`
+   2. cli 项目：`/src/static/svg-icons`
 3. 运行脚本 `npm run svgicon`
 4. 结束！
 
