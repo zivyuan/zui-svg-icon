@@ -193,7 +193,12 @@ const generateIcon = (svgRaw) => {
   const colorTotal = colors.length;
 
   if (colorTotal === 0) {
-    return generateIcon(result.data.replace(/<path /g, `<path fill="${currentColor || defaultColor}" `))
+    const fixable = /<(path|circle|ellipse|polygon|polyline|rect) /g;
+    if (fixable.test(result.data)) {
+      return generateIcon(result.data.replace(fixable, `<$1 fill="${currentColor || defaultColor}" `))
+    } else {
+      console.log('  SVG 图片没有配置颜色, 并且无法进行预处理。请联系作者修复此问题。https://ext.dcloud.net.cn/plugin?id=13964');
+    }
   } else if (colorTotal > 0) {
     console.log("    ", JSON.stringify(colors));
   }
