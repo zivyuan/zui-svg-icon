@@ -15,9 +15,7 @@
 </template>
 
 <script>
-import { SvgIconLib as IconLib } from "@/static/svg-icons-lib.js";
-
-const ThePalette = IconLib.$_colorPalette;
+import { SvgIconLib } from "@/static/svg-icons-lib.js";
 
 export default {
   name: "zui-svg-icon",
@@ -69,6 +67,14 @@ export default {
      * 圆角设置
      */
     borderRadius: [Number, String],
+
+    /**
+     * 图标集合
+     */
+    collection: {
+      type: String,
+      default: "default",
+    }
   },
 
   data() {
@@ -82,6 +88,9 @@ export default {
   },
 
   computed: {
+    svgIconLib() {
+      return SvgIconLib.getCollection(this.collection || 'default');
+    },
     /**
      * 是否文件来源
      *
@@ -94,7 +103,7 @@ export default {
     svgRaw() {
       if (this.isFileSource) return this.icon;
 
-      const iconPreset = IconLib.icons[this.icon];
+      const iconPreset = this.svgIconLib.icons[this.icon];
       if (!iconPreset) {
         console.warn(
           `Svg icon [${this.icon}] not defined and no fallback icon set.`
@@ -267,9 +276,9 @@ export default {
     },
 
     getOriginalColors() {
-      const iconPreset = IconLib.icons[this.icon];
+      const iconPreset = this.svgIconLib.icons[this.icon];
       return iconPreset
-        ? iconPreset.slice(1).map((idx) => ThePalette[idx])
+        ? iconPreset.slice(1).map((idx) => this.svgIconLib.$_colorPalette[idx])
         : [];
     },
   },

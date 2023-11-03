@@ -9,7 +9,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const readline = require("readline")
+const readline = require("readline");
 const cliInput = (prompt) => {
   return new Promise((resolve, reject) => {
     const rl = readline.createInterface({
@@ -17,194 +17,219 @@ const cliInput = (prompt) => {
       output: process.stdout,
     });
     rl.question(prompt, (ipt) => {
-      resolve(ipt)
-      rl.close()
-    })
-  })
-}
+      resolve(ipt);
+      rl.close();
+    });
+  });
+};
 const { optimize } = require("svgo");
 
+
+const parseOptions = () => {
+  const argv = process.argv.slice(2);
+  const opts = {}
+  argv.forEach(arg => {
+    if (arg.indexOf('=') > -1) {
+      const o = arg.split('=')
+      opts[o[0]] = o[1];
+    } else {
+      opts[arg] = true;
+    }
+  })
+  return opts;
+}
+
+const options = parseOptions();
+
 const regFile = /\.svg$/i;
-const regColorFormat = /#([0-9A-F]{3}|[0-9A-F]{6}|[0-9A-F]{8})|(?:rgb|hsl|hwb|lab|lch|oklab|oklch)a?\([\d.,\/%]+\)/i;
-const regCurrentColor = /([:"'] *)currentColor/g
+const regColorFormat =
+  /#([0-9A-F]{3}|[0-9A-F]{6}|[0-9A-F]{8})|(?:rgb|hsl|hwb|lab|lch|oklab|oklch)a?\([\d.,\/%]+\)/i;
+const regCurrentColor = /([:"'] *)currentColor/g;
 
 const root = path.resolve(__dirname + "/../../..");
+if (fs.existsSync(root + "/src")) {
+  root = root + "/src";
+}
 const svgo = root + "/svgo.config.js";
 if (!fs.existsSync(svgo)) {
   fs.copyFileSync(__dirname + "/svgo.config.js", svgo);
 }
 
 // 需要处理的颜色属性
-let svgBase = "";
-
-if (fs.existsSync(root + "/src")) {
-  svgBase = root + "/src/static";
-} else {
-  svgBase = root + "/static";
-}
-const svgFolder = svgBase + "/svg-icons";
+let svgBase = root + "/static";
+const svgFolder = options.source || (svgBase + "/svg-icons");
 
 if (!fs.existsSync(svgFolder)) {
   fs.mkdirSync(svgFolder, { recursive: true });
 }
-const svgLibFile = svgBase + "/svg-icons-lib.js";
+const svgLibFile = svgBase + `/${options.lib || 'svg-icons-lib'}.js`;
 
 const svgLibCurrent = (() => {
   try {
     let raw = fs.readFileSync(svgLibFile, { encoding: "utf-8" });
-    const start = raw.indexOf("const svglib") + 15
-    const end = raw.indexOf('export const')
-    raw = raw.substring(start, end).trim().replace(/;$/, '');
-    return JSON.parse(raw);
-  } catch (err) { }
+    const start = raw.indexOf("const collections = {") + 20;
+    const end = raw.indexOf("// == collection end");
+    raw = raw.substring(start, end).trim().replace(/;$/, "");
+    return JSON.parse(raw).default;
+  } catch (err) {
+  }
   return {};
 })();
 const svgPath = path.resolve(svgFolder);
 const svgLib = {};
-const svgList = fs.readdirSync(svgPath, {recursive: true}).map(item => {
-  if (!regFile.test(item)) return null;
-  const name = item.slice(0, -4).replace(/\//g, '-');
-  const content = fs.readFileSync(svgPath + "/" + item).toString();
+const svgList = fs
+  .readdirSync(svgPath, { recursive: true })
+  .map((item) => {
+    if (!regFile.test(item)) return null;
+    const name = item.slice(0, -4).replace(/\//g, "-");
+    const content = fs.readFileSync(svgPath + "/" + item, {
+      encoding: "utf-8",
+    });
 
-  return {
-    name,
-    content,
-    hasCurrentColor: regCurrentColor.test(content)
-  }
-}).filter(item => !!item);
+    return {
+      name,
+      content,
+      hasCurrentColor: regCurrentColor.test(content),
+    };
+  })
+  .filter((item) => !!item);
 
+//
+const defaultColor = '#22ac38';
+let currentColor = svgLibCurrent.currentColor || "";
 let palette = [];
-let currentColor = svgLibCurrent.currentColor ? svgLibCurrent.currentColor : '';
+
+const generateIcon = (svgRaw) => {
+  // svgo 会过滤纯黑, 此处对纯黑做简单处理
+  svgRaw = svgRaw
+    .replace(regCurrentColor, `$1${currentColor}`)
+    .replace(/#0{3,8}/g, "#ZZZZZZ");
+  const result = optimize(svgRaw, {
+    multipass: true,
+  });
+  result.data = result.data.replace(/#Z{3,8}/gi, "#000");
+
+  const regColor = /(fill|stroke|stop-color):([^;}]+)/g;
+  const parseColor = (colorStr) => {
+    if (!regRef.test(colorStr)) {
+      return colorStr;
+    }
+    // 从 Gradient 引用里获取颜色
+    const match = colorStr.match(regRef);
+    const ref = gradients.find((item) => {
+      return item.id === match[1];
+    });
+    return ref ? ref.colors : [];
+  };
+
+  // Step 1, find all Gradient define and make KV map
+  const regGradient = /<(\w+Gradient) id="([^"]+)" [^>]+>(.+?)<\/\1>/g;
+  const regStopColors = /stop-color="([^"]+)"/g;
+  const gradients = [...result.data.matchAll(regGradient)].map((item) => {
+    const colors = [...item[3].matchAll(regStopColors)].map(
+      (item) => item[1]
+    );
+    return {
+      id: item[2],
+      content: item[3],
+      colors,
+    };
+  });
+
+  // Step 2, find all class define and make KV map
+  const regClass = /\.(cls-\d+)\{([^}]+)\}/g;
+  const regRef = /url\(#(.+)\)/;
+  const classes = [...result.data.matchAll(regClass)].map((item) => {
+    // Search colors from item[2]
+    // find fill, stroke, stop-color
+    const colors = [...item[2].matchAll(regColor)].map((item) =>
+      parseColor(item[2])
+    );
+
+    return {
+      id: item[1],
+      content: item[2],
+      colors: colors,
+    };
+  });
+
+  // Step 3, find all style, class, stroke property and search color in value
+  const regProps = /(fill|stroke|class|style)="([^"]+)"/g;
+  const props = [...result.data.matchAll(regProps)].map((content) => {
+    let colors = [];
+    if (content[1] === "class") {
+      const item = classes.find((item) => item.id === content[2]);
+      colors = item ? item.colors : [];
+    } else if (content[1] === "style") {
+      colors = [...content[2].matchAll(regColor)].map((item) =>
+        parseColor(item[2])
+      );
+    } else if (content[1] === "fill") {
+      colors = parseColor(content[2]);
+    } else {
+      colors = content[2];
+    }
+    return {
+      prop: content[1],
+      content: content[2],
+      // 定义里的颜色
+      colors: colors,
+    };
+  });
+
+  // Step 4, filter
+  let colors = props
+    .map((item) => item.colors)
+    .flat(2)
+    .filter((item) => item !== "none" && !/^url/.test(item))
+    .map((item) => (item === "currentColor" ? currentColor : item));
+  colors = Array.from(new Set(colors));
+
+  // Append new colors to palette
+  palette = Array.from(new Set([...palette, ...colors]));
+
+  // Build color index
+  let colorMap = colors.map((c) => palette.indexOf(c));
+  const colorTotal = colors.length;
+
+  if (colorTotal === 0) {
+    return generateIcon(result.data.replace(/<path /g, `<path fill="${currentColor || defaultColor}" `))
+  } else if (colorTotal > 0) {
+    console.log("    ", JSON.stringify(colors));
+  }
+
+  return [result.data, ...colorMap];
+}
 
 (async () => {
   // 检测是否存在 currentColor
-  const hasCurrentColor = svgList.find(item => item.hasCurrentColor)
+  const hasCurrentColor = svgList.find((item) => item.hasCurrentColor);
   if (!currentColor && hasCurrentColor) {
-
     console.log("\n");
     console.log(
       "::>> 检测到 svg 文件中使用了 currentColor 变量，该变量在组件中不被支持。\n"
     );
-    console.log("::>> 需要指定一个颜色替代，默认黑色为(#000)。\n");
+    currentColor = defaultColor
+    console.log(`::>> 需要指定一个颜色替代，默认黑色为(${currentColor})。\n`);
 
     do {
-      const color = await cliInput(`请输入颜色，直接回车(enter)使用默认值：`)
+      const color = await cliInput(`请输入颜色，直接回车(enter)使用默认值：`);
       if (color && color.length && !regColorFormat.test(color)) {
-        console.log('\n::>> 颜色格式不正确，请输入以下格式的颜色值：\n')
-        console.log('::>>', [
-          '#000',
-          '#000000',
-          'rgb(0, 0, 0)',
-          'rgba(0, 0, 0, 1)',
-        ].join('   '), '\n')
+        console.log("\n::>> 颜色格式不正确，请输入以下格式的颜色值：\n");
+        console.log(
+          "::>>",
+          ["#000", "#000000", "rgb(0, 0, 0)", "rgba(0, 0, 0, 1)"].join("   "),
+          "\n"
+        );
       } else {
-        currentColor = (color && color.length) ? color.replace(/ /g, '') : '#000'
+        currentColor = color && color.length ? color.replace(/ /g, "") : defaultColor;
       }
-
-    } while (!currentColor)
+    } while (!currentColor);
   }
 
   svgList.forEach((item) => {
-    const name = item.name
-    // svgo 会过滤纯黑, 此处对纯黑做简单处理
-    const svgContent = item.content.replace(regCurrentColor, `$1${currentColor}`).replace(/#0{3,8}/g, "#ZZZZZZ");
-    const result = optimize(svgContent, {
-      multipass: true,
-    });
-    result.data = result.data.replace(/#Z{3,8}/gi, "#000");
-    svgLib[name] = result.data;
-
-    const regColor = /(fill|stroke|stop-color):([^;}]+)/g;
-    const parseColor = (colorStr) => {
-      if (!regRef.test(colorStr)) {
-        return colorStr;
-      }
-      // 从 Gradient 引用里获取颜色
-      const match = colorStr.match(regRef);
-      const ref = gradients.find((item) => {
-        return item.id === match[1];
-      });
-      return ref ? ref.colors : [];
-    };
-
-    // Step 1, find all Gradient define and make KV map
-    const regGradient = /<(\w+Gradient) id="([^"]+)" [^>]+>(.+?)<\/\1>/g;
-    const regStopColors = /stop-color="([^"]+)"/g;
-    const gradients = [...result.data.matchAll(regGradient)].map((item) => {
-      const colors = [...item[3].matchAll(regStopColors)].map(
-        (item) => item[1]
-      );
-      return {
-        id: item[2],
-        content: item[3],
-        colors,
-      };
-    });
-
-    // Step 2, find all class define and make KV map
-    const regClass = /\.(cls-\d+)\{([^}]+)\}/g;
-    const regRef = /url\(#(.+)\)/;
-    const classes = [...result.data.matchAll(regClass)].map((item) => {
-      // Search colors from item[2]
-      // find fill, stroke, stop-color
-      const colors = [...item[2].matchAll(regColor)].map((item) =>
-        parseColor(item[2])
-      );
-
-      return {
-        id: item[1],
-        content: item[2],
-        colors: colors,
-      };
-    });
-
-    // Step 3, find all style, class, stroke property and search color in value
-    const regProps = /(fill|stroke|class|style)="([^"]+)"/g;
-    const props = [...result.data.matchAll(regProps)].map((content) => {
-      let colors = [];
-      if (content[1] === "class") {
-        const item = classes.find((item) => item.id === content[2]);
-        colors = item ? item.colors : [];
-      } else if (content[1] === "style") {
-        colors = [...content[2].matchAll(regColor)].map((item) =>
-          parseColor(item[2])
-        );
-      } else if (content[1] === "fill") {
-        colors = parseColor(content[2]);
-      } else {
-        colors = content[2];
-      }
-      return {
-        prop: content[1],
-        content: content[2],
-        // 定义里的颜色
-        colors: colors,
-      };
-    });
-
-    // Step 4, filter
-    let colors = props
-      .map((item) => item.colors)
-      .flat(2)
-      .filter((item) => item !== "none" && !/^url/.test(item))
-      .map(item => item === 'currentColor' ? currentColor : item)
-    colors = Array.from(new Set(colors));
-
-    // Append new colors to palette
-    palette = Array.from(new Set([...palette, ...colors]));
-
-    // Build color index
-    const colorMap = colors.map((c) => palette.indexOf(c));
-    const colorTotal = colors.length;
-
-    console.log(name);
-    if (colorTotal === 0) {
-      console.log("    ", "!!! 图标没有颜色定义, 将不支持改色. !!!");
-    } else if (colorTotal > 0) {
-      console.log("    ", JSON.stringify(colors));
-    }
-
-    svgLib[name] = [result.data, ...colorMap];
+    console.log(item.name);
+    svgLib[item.name] = generateIcon(item.content);
   });
 
   const data = {
@@ -215,26 +240,18 @@ let currentColor = svgLibCurrent.currentColor ? svgLibCurrent.currentColor : '';
 
   const hasChange = JSON.stringify(svgLibCurrent) !== JSON.stringify(data);
   if (hasChange) {
-    const script = [
-      `/**
- *
- * Icon Library for <zui-svg-icon> usage
- *
- * Auto generated by /tools/svgicon.js
- *
- * !!! DO NOT MODIFY MANUALLY !!!
- *
- * @datetime ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}
- *
- */`,
-      "",
-      `const svglib = ${JSON.stringify(data, null, 2)};
+    const scriptTpl = fs.readFileSync(__dirname + "/svg-icons-lib.tpl.js", {
+      encoding: "utf-8",
+    });
+    const params = {
+      datetime: `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`,
+      default: JSON.stringify(data, null, 2).split("\n").join("\n  "),
+    };
+    const script = scriptTpl.replace(/__(\w+)__/g, (_, key) => {
+      return params[key] || _;
+    });
 
-export const SvgIconLib = svglib;
-export default SvgIconLib;
-`
-    ];
-    fs.writeFileSync(svgLibFile, script.join("\n"));
+    fs.writeFileSync(svgLibFile, script);
     console.log(`\nTotal ${Object.keys(svgLib).length} svg icon(s) generated.`);
   } else {
     console.log(
@@ -243,8 +260,10 @@ export default SvgIconLib;
   }
 
   if (hasCurrentColor) {
-    console.log('\n')
-    console.log('  当前有使用到 currentColor 变量，可通过文件 static/svg-icons-lib.js 里的 currentColor 属性进行修改。')
-    console.log('\n')
+    console.log("\n");
+    console.log(
+      "  当前有使用到 currentColor 变量，可通过文件 static/svg-icons-lib.js 里的 currentColor 属性进行修改。"
+    );
+    console.log("\n");
   }
-})()
+})();
