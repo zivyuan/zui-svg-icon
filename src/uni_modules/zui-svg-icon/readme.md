@@ -35,8 +35,15 @@ PS: 启动浏览器预览需要打开手机模器
 
 > 第一次运行或更新图标后需要手动运行一次图标生成脚本
 
-图标生成方法见下方说明
+自定义图标生成方法见下方说明
 
+**除了自定义图标, 现在还可以使用图标库啦:** <span class="banner">
+<span class="surport">
+<a href="https://ext.dcloud.net.cn/plugin?id=15226" target="_blank" class="btn btn-support" style="border: 1px solid #ec4d4d;letter-spacing: 1px;">
+  Material图标集合 图标组件 SVG 图标库
+</a>
+</span>
+</span>
 
 ## 🍎 程序兼容性列表
 
