@@ -74,22 +74,42 @@ const svgLibCurrent = (() => {
 })()
 const svgPath = path.resolve(svgFolder)
 const svgLib = {}
-const svgList = fs
-  .readdirSync(svgPath, { recursive: true })
-  .map(item => {
-    if (!regFile.test(item)) return null
-    const name = item.slice(0, -4).replace(/\//g, '-')
-    const content = fs.readFileSync(svgPath + '/' + item, {
-      encoding: 'utf-8',
-    })
+const svgList = (() => {
+  const fileList = []
+  const loadSvgList = searchPath => {
+    const files = fs.readdirSync(searchPath, { recursive: false })
+    for (const file of files) {
+      const filePath = path.posix.join(searchPath, file)
+      const stat = fs.statSync(filePath)
+      if (stat.isFile()) {
+        if (!/\.svg$/i.test(filePath)) continue
 
-    return {
-      name,
-      content,
-      hasCurrentColor: regCurrentColor.test(content),
+        const item = filePath.slice(filePath.lastIndexOf('svg-icons/') + 10)
+        const name = item.slice(0, -4).replace(/\//g, '-')
+        const content = fs.readFileSync(filePath, {
+          encoding: 'utf-8',
+        })
+        fileList.push({
+          name,
+          content,
+          hasCurrentColor: regCurrentColor.test(content),
+          file: filePath,
+        })
+      }
+      //
+      else if (stat.isDirectory()) {
+        loadSvgList(filePath)
+      }
     }
-  })
-  .filter(item => !!item)
+    return fileList
+  }
+
+  return loadSvgList(svgPath).filter(item => !!item)
+})(svgPath)
+
+console.log(svgList.map(item => item.file))
+
+process.exit(1)
 
 //
 const defaultColor = '#22ac38'

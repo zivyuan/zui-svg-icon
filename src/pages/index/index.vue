@@ -70,15 +70,15 @@ import Color from "color";
 const imgIconLib = [
   {
     name: "a-uniapp",
-    img: "/static/svg-icons/a-uniapp.svg",
+    img: "/static/svg-icons/app/uniapp.svg",
   },
   {
     name: "b-google-play",
-    img: "/static/svg-icons/b-google-play.svg",
+    img: "/static/svg-icons/app/google/google-play.svg",
   },
   {
     name: "c-instagram",
-    img: "/static/svg-icons/c-instagram.svg",
+    img: "/static/svg-icons/app/instagram.svg",
   },
   {
     name: "chrome",
