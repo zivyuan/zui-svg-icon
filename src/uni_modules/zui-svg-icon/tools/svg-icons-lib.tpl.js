@@ -12,30 +12,29 @@
 
 // == collection start
 const collections = {
-  "default": __default__
+  default: __default__,
 }
 // == collection end
 
-const svglib = {};
+const svglib = {}
 
 svglib.registerCollection = (key, lib) => {
   if (collections[key]) {
-    return;
+    return
   }
 
   if (typeof lib.registerCollection === 'function') {
-    collections[key] = lib.getCollection('default');
+    collections[key] = lib.getCollection('default')
   } else {
-    collections[key] = lib;
+    collections[key] = lib
   }
-};
+}
 
 svglib.getCollection = (key = 'default') => {
-  if (!collections[key])
-    throw new Error(`没有找到名为 ${key} 的图标库。`);
+  if (!collections[key]) throw new Error(`没有找到名为 ${key} 的图标库。`)
 
-  return collections[key];
-};
+  return collections[key]
+}
 
-export const SvgIconLib = svglib;
-export default SvgIconLib;
+export const SvgIconLib = svglib
+export default SvgIconLib
