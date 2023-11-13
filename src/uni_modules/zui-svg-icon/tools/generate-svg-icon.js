@@ -40,7 +40,6 @@ const parseOptions = () => {
 
 const options = parseOptions()
 
-const regFile = /\.svg$/i
 const regColorFormat = /#([0-9A-F]{3}|[0-9A-F]{6}|[0-9A-F]{8})|(?:rgb|hsl|hwb|lab|lch|oklab|oklch)a?\([\d.,\/%]+\)/i
 const regCurrentColor = /([:"'] *)currentColor/g
 
@@ -75,6 +74,7 @@ const svgLibCurrent = (() => {
 const svgPath = path.resolve(svgFolder)
 const svgLib = {}
 const svgList = (() => {
+  const regFile = /\.svg$/i
   const fileList = []
   const loadSvgList = searchPath => {
     const files = fs.readdirSync(searchPath, { recursive: false })
@@ -82,7 +82,7 @@ const svgList = (() => {
       const filePath = path.posix.join(searchPath, file)
       const stat = fs.statSync(filePath)
       if (stat.isFile()) {
-        if (!/\.svg$/i.test(filePath)) continue
+        if (!regFile.test(filePath)) continue
 
         const item = filePath.slice(filePath.lastIndexOf('svg-icons/') + 10)
         const name = item.slice(0, -4).replace(/\//g, '-')
