@@ -107,10 +107,6 @@ const svgList = (() => {
   return loadSvgList(svgPath).filter(item => !!item)
 })(svgPath)
 
-console.log(svgList.map(item => item.file))
-
-process.exit(1)
-
 //
 const defaultColor = '#22ac38'
 let currentColor = svgLibCurrent.currentColor || ''
