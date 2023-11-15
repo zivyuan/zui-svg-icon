@@ -97,16 +97,22 @@ export default {
      * 包含 url, svg原始字符串, 未进行 base64 编码的 data:image/svg+xml uri
      */
     isFileSource() {
-      return !/^[\w-]+$/.test(this.icon);
+      if ((/^https?\:\/\//i).test(this.icon)) return true;
+      if ((/^data:image\//i).test(this.icon)) return true;
+      if ((/\.svg([?#].*)?$/i).test(this.icon)) return true;
+      if (this.icon.indexOf('/') > -1) return true;
+
+      return false;
     },
 
     svgRaw() {
       if (this.isFileSource) return this.icon;
 
-      const iconPreset = this.svgIconLib.icons[this.icon];
+      const iconId = this.icon.toLowerCase();
+      const iconPreset = this.svgIconLib.icons[iconId];
       if (!iconPreset) {
         console.warn(
-          `Svg icon [${this.icon}] not defined and no fallback icon set.`
+          `Svg icon [${iconId}] not defined and no fallback icon set.`
         );
         return;
       }
