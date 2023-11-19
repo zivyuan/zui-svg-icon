@@ -3,7 +3,7 @@
     <swiper class="icon-swiper" :current="currentIcon" @change="onIconChange">
       <swiper-item v-for="icon in iconLib" :key="icon.key" class="icon-item">
         <view class="icon">
-          <zui-svg-icon :icon="icon.key" :color="mapedColorLib[currentIcon]" />
+          <zui-svg-icon :icon="icon.key" :color="mapedColorLib[currentIcon]" :aspect-ratio="1" />
         </view>
         <view class="title">
           <text class="icon-code">{{ icon.key }}</text>
@@ -70,7 +70,7 @@ import Color from "color";
 const imgIconLib = [
   {
     name: "a-uniapp",
-    img: "/static/svg-icons/app/uniapp.svg",
+    img: "/static/svg-icons/uniapp.svg",
   },
   {
     name: "b-google-play",

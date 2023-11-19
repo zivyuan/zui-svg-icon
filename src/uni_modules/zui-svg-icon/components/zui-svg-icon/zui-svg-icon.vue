@@ -42,11 +42,20 @@ export default {
       default: "1.2em",
     },
 
+    /**
+     * 宽高比
+     * aspectRatio = width / height
+     */
     aspectRatio: {
       type: Number,
       default: 1,
     },
 
+    /**
+     * 图标灰度系数
+     * boolean true =>  1
+     * number => [0, 1]
+     */
     gray: {
       type: [Boolean, Number],
       default: false,
@@ -163,7 +172,7 @@ export default {
 
       if (this.fixedHei) {
         style["--zui-svg-icon-height"] = `${
-          this.fixedHei * this.aspectRatio
+          this.fixedHei
         }px`;
       }
 
@@ -236,20 +245,6 @@ export default {
       }, 1);
     },
 
-    initialIconSize() {
-      // #ifndef H5
-      const query = uni.createSelectorQuery().in(this);
-      query
-        .select(".zui-svg-icon")
-        .fields({ size: true })
-        .exec((rst) => {
-          if (!rst) return;
-          if (!rst[0]) return;
-          this.fixedHei = rst[0].width;
-        });
-      // #endif
-    },
-
     initialIconColor() {
       // Initial color map
       const oriColors = this.getOriginalColors();
@@ -277,7 +272,6 @@ export default {
     },
 
     initialIcon() {
-      this.initialIconSize();
       this.initialIconColor();
     },
 
@@ -316,18 +310,15 @@ export default {
 }
 .zui-svg-icon-wrapper {
   --zui-svg-icon-height-auto: calc(
-    var(--zui-svg-icon-width) * var(--zui-svg-icon-aspect-ratio)
+    var(--zui-svg-icon-width) / var(--zui-svg-icon-aspect-ratio)
   );
 
   position: relative;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  aspect-ratio: var(--zui-svg-icon-aspect-ratio);
   width: var(--zui-svg-icon-width);
-  // #ifndef H5
-  height: var(--zui-svg-icon-height, --zui-svg-icon-height-auto);
-  // #endif
+  height: var(--zui-svg-icon-height-auto);
   line-height: 1;
   vertical-align: middle;
   border-radius: var(--zui-svg-icon-border-radius, 0);

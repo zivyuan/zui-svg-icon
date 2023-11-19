@@ -70,15 +70,15 @@ PS: 启动浏览器预览需要打开手机模器
 | 参数 | 类型 | 说明 |
 |---|---|---|
 | icon | string | 图标 id, 同图标文件名 |
-|  | string | svg 源码字符串|
-|  | string | 图片 URI |
-|  | string | Data URI |
+|  | string | svg 源码字符串 *(不支持改色)* |
+|  | string | 图片 URI *(不支持改色)* |
+|  | string | Data URI *(不支持改色)* |
 | color | string  | 单色图标颜色 |
 |  | string[] | 多色图标颜色, 颜色种类必须与图标中的种类一致<br/>[了解多色图标👇🏻](#❤️‍🔥-多色图标) |
 | width | string \| number | 图标宽度. 默认 1.2em. |
-| aspect-ratio | number | 图标比例. 默认为 1, 正方形 |
-| gray | boolean | 灰度显示, 默认: false |
-|  | number | 灰度比例, 范围: [0, 1] |
+| aspect-ratio | number | 图标宽高比. 默认为 1, 正方形 |
+| gray | number | 灰度显示系数, [0, 1]. 默认为 0, 不开启 |
+|  | boolean | 灰度显示系数. true => 1, false => 0 |
 | spin | boolean | 是否启用 spin 动画。默认 false |
 | | number | 动画时间。默认 5s，顺时针旋转；指定为负数时逆时针旋转；为 0 时禁用旋转效果，即 spin=false。 |
 | borderRadius | number | 圆角数值，单位：像素。当输入值小于1当，作百分比处理 |
