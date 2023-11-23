@@ -50,6 +50,7 @@
       <view class="img-icon-gallery">
         <view v-for="icon in imgIconLib" :key="icon.name" class="img-icon-item">
           <zui-svg-icon
+            width="48rpx"
             :icon="icon.img"
             :spin="spinIcon === icon.name && spinIconDur"
             :border-radius="borderRadius"
