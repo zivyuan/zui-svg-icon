@@ -86,7 +86,7 @@ const svgList = (() => {
 
         const item = filePath.slice(filePath.lastIndexOf('svg-icons/') + 10)
         // const name = item.slice(0, -4).replace(/[/!@#$%^&*()+=\[\]{};:'",.<>\?`]/g, '-').toLowerCase()
-        const name = item.slice(0, -4).replace(/\/\\/g, '-').toLowerCase()
+        const name = item.slice(0, -4).replace(/[\/\\]/g, '-').toLowerCase()
         const content = fs.readFileSync(filePath, {
           encoding: 'utf-8',
         })
