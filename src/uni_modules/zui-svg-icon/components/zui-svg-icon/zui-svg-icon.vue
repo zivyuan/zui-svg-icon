@@ -5,14 +5,14 @@
       <view class="click-helper" @click="doClick" @tap="doTap"></view>
       <!-- #endif -->
 
-      <image class="zui-svg-icon-image" :src="svgDataurl" mode="aspectFit"></image>
+      <image class="zui-svg-icon-image" :src="svgDataUrl" mode="aspectFit"></image>
     </view>
   </view>
 </template>
 
 <script>
 import { SvgIconLib } from '@/static/svg-icons-lib.js'
-import { rpx2px } from '../../utils/utils'
+import { rpx2px, validRaw } from '../../utils/utils'
 
 export default {
   name: 'zui-svg-icon',
@@ -22,7 +22,16 @@ export default {
   props: {
     icon: {
       type: String,
-      required: true,
+      default: undefined,
+    },
+
+    /**
+     * svg 原始代码
+     * base64 图片
+     */
+    raw: {
+      type: String,
+      default: undefined,
     },
 
     /**
@@ -132,21 +141,16 @@ export default {
      * 包含 url, svg原始字符串, 未进行 base64 编码的 data:image/svg+xml uri
      */
     isFileSource() {
-      if (/^https?\:\/\//i.test(this.icon)) return true
-      if (/^data:image\//i.test(this.icon)) return true
-      if (/\.svg([?#].*)?$/i.test(this.icon)) return true
-      if (this.icon.indexOf('/') > -1) return true
-
-      return false
+      return !!this.raw && validRaw(this.raw)
     },
 
     svgRaw() {
-      if (this.isFileSource) return this.icon
+      if (validRaw(this.icon)) throw new Error('请使用 raw 属性设置 url 或 base64 格式的图标资源. 参考: https://ext.dcloud.net.cn/plugin?id=13964#zui-properties');
 
       const iconId = this.icon.toLowerCase()
       const iconPreset = this.svgIconLib.icons[iconId]
       if (!iconPreset) {
-        console.warn(`Svg icon [${iconId}] not defined and no fallback icon set.`)
+        console.warn(`图标 [${iconId}] 没有定义，请检查图标名称或使用 npm run svgicon 重新生成图标库.`)
         return
       }
       let svg = iconPreset[0]
@@ -160,20 +164,18 @@ export default {
       return svg
     },
 
-    svgDataurl() {
-      if (!this.isFileSource) {
-        return `data:image/svg+xml,${encodeURIComponent(this.svgRaw)}`
+    svgDataUrl() {
+      if (this.raw) {
+        if (/^data:image\/svg\+xml,<svg/i.test(this.raw)) {
+          return `data:image/svg+xml,${encodeURIComponent(this.raw.substring(19))}`
+        } else if (/<svg/.test(this.raw)) {
+          return `data:image/svg+xml,${encodeURIComponent(this.raw)}`
+        } else {
+          return this.raw;
+        }
       }
 
-      if (/^data:image\/svg\+xml,<svg/i.test(this.icon)) {
-        return `data:image/svg+xml,${encodeURIComponent(this.icon.substring(19))}`
-      }
-
-      if (/^<svg/i.test(this.icon)) {
-        return `data:image/svg+xml,${encodeURIComponent(this.icon)}`
-      }
-
-      return this.icon
+      return `data:image/svg+xml,${encodeURIComponent(this.svgRaw)}`
     },
 
     clazz() {
@@ -237,6 +239,12 @@ export default {
     color() {
       this.initialIconColor()
     },
+  },
+
+  created() {
+    if (!this.icon && !this.raw) {
+      throw new Error('要让 <zui-svg-icon /> 正常工作, icon 和 raw 属性必须指定其中一个.')
+    }
   },
 
   mounted() {

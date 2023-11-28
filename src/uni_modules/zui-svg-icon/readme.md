@@ -65,14 +65,13 @@ PS: 启动浏览器预览需要打开手机模器
 
 
 
-## 🍊 参数
+## 🍊 参数 <a href="#zui-properties">&nbsp;</a>
+
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
 | icon | string | 图标 id, 同图标文件名 |
-|  | string | svg 源码字符串 *(不支持改色)* |
-|  | string | 图片 URI *(不支持改色)* |
-|  | string | Data URI *(不支持改色)* |
+| raw | string | 使用 svg 源码、图片URI 或 Data URI 设置图标 ***(不支持改色)***|
 | color | string  | 单色图标颜色 |
 |  | string[] | 多色图标颜色, 颜色种类必须与图标中的种类一致<br/>[了解多色图标👇🏻](#❤️‍🔥-多色图标) |
 | width | string \| number | 图标宽度. 默认 1.2em. |
@@ -85,7 +84,7 @@ PS: 启动浏览器预览需要打开手机模器
 | | string | CSS 允许的值 |
 
 > 说明:
->   当 icon 配置为 svg 源码字符串，图片URI，Data URI 时，图标不支持修改颜色
+>   使用 raw 属性配置图标时，**不支持改色**
 
 <span class="banner">
 <span class="surport">

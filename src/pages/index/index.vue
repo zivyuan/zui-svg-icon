@@ -51,7 +51,7 @@
         <view v-for="icon in imgIconLib" :key="icon.name" class="img-icon-item">
           <zui-svg-icon
             width="48rpx"
-            :icon="icon.img"
+            :raw="icon.img"
             :spin="spinIcon === icon.name && spinIconDur"
             :border-radius="borderRadius"
             @tap="doIconSpin(icon)"

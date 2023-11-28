@@ -9,3 +9,18 @@ export const rpx2px = (rpx, unit = false) => {
   const px = (_screenWidth * Number.parseFloat(rpx)) / 750;
   return unit ? `${px}px` : px;
 }
+
+/**
+ * 验证输入的数据是否为合法的图片格式
+ *
+ * @param {string} svgRaw
+ * @returns
+ */
+export const validRaw = (svgRaw) => {
+  if (/^https?\:\/\//i.test(svgRaw)) return true
+  if (/^data:image\//i.test(svgRaw)) return true
+  if (/\.svg([?#].*)?$/i.test(svgRaw)) return true
+  if (svgRaw.indexOf('/') > -1) return true
+
+  return false
+}

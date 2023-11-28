@@ -59,13 +59,11 @@ PS: 启动浏览器预览需要打开手机模器
 | 参数 | 类型 | 说明 |
 |---|---|---|
 | icon | string | 图标 id, 同图标文件名 |
-|  | string | svg 源码字符串 *(不支持改色)* |
-|  | string | 图片 URI *(不支持改色)* |
-|  | string | Data URI *(不支持改色)* |
+| raw | string | 使用 svg 源码、图片URI 或 Data URI 设置图标 ***(不支持改色)***|
 | color | string  | 单色图标颜色 |
 |  | string[] | 多色图标颜色, 颜色种类必须与图标中的种类一致<br/>[了解多色图标👇🏻](#❤️‍🔥-多色图标) |
 | width | string \| number | 图标宽度. 默认 1.2em. |
-| height | string \| number | 图标调试. 默认 1.2em. |
+| height | undefined \| string \| number | 图标调试. 默认 undefined, 与高度一致. |
 | gray | number | 灰度显示系数, [0, 1]. 默认为 0, 不开启 |
 |  | boolean | 灰度显示系数. true => 1, false => 0 |
 | spin | boolean | 是否启用 spin 动画。默认 false |
