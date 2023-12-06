@@ -5,14 +5,15 @@
 **解决了 uni-app 在 APP 端中无法使用 SVG标签的问题**
 
 - 支持单色、多色 SVG 图标换色；
-- 支持图片 URI 地址；
-- 支持 Base64 图片格式；
-- 支持 spin 动画，可自定义旋转方向与速度；
+- 支持图片 URI 地址
+- 支持 Base64 图片格式
+- 支持 spin 动画，可自定义旋转方向与速度
 - SVG 图片优化。
+- 图标库支持
 
 
 
-## 🍏 在线演示
+## 在线演示
 
 **[💻 点我在浏览器里预览 https://uni.imgozi.cn/zui-svg-icon/](https://uni.imgozi.cn/zui-svg-icon/?utm_source=uni-plugin-market&utm_medium=readme&utm_campaign=zui-svg-icon&utm_id=uni-plugin)**
 
@@ -24,29 +25,136 @@ PS: 启动浏览器预览需要打开手机模器
 
 
 
-## 🍐 快速上手：
+## 快速上手：
 
-```html
+### 〇、生成图标库
+
+```shell
+npm rum svgicon
+```
+
+> 第一次使用请先参考下方 **图标库管理** 章节
+
+### 一、使用
+
+```vue
 <!-- 单色图标 -->
 <zui-svg-icon icon="doc" color="#FF0000" />
 <!-- 多色图标 -->
 <zui-svg-icon icon="doc" :color="['#FF0000', '#00FF00', '#0000FF']" />
 ```
 
-> 第一次运行或更新图标后需要手动运行一次图标生成脚本
 
-自定义图标生成方法见下方说明
 
-**除了自定义图标, 现在还可以使用图标库啦:** <span class="banner">
+## 图标库管理
+
+图标库依赖 [svgo](https://www.npmjs.com/package/svgo) 插件对 svg 图标进行优化压缩，所以在所有工作开始前应该先安装 svgo 依赖。
+
+> HBuilderX 项目和 cli 项目在路径上有所区别，请根据自己项目类型合理使用。
+
+
+
+### 〇、安装必要依赖
+
+```
+npm i svgo@latest
+```
+
+如果最新版本在使用中出现异常，可以将 svgo 回退到插件开发环境使用的版本 `svgo@^3.0.5`。
+
+
+
+### 一、配置 npm 脚本
+
+在项目 `package.json` 中添加脚本。
+
+HBuilderX 项目
+
+```json
+"svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"
+```
+
+cli 项目
+
+```json
+"svgicon": "node ./src/uni_modules/zui-svg-icon/tools/generate-svg-icon.js"
+```
+
+
+
+### 二、准备图片
+
+将 svg 图片复制到指定的目录
+
+HBuilderX 项目
+
+```shell
+./static/svg-icons/
+```
+
+cli 项目
+
+```shell
+./src/static/svg-icons/
+```
+
+> 在 svg 目录中可以对图标按文件夹进行分组管理
+
+
+
+### 三、生成图标库
+
+运行图标库生成脚本
+
+```shell
+npm run svgicon
+```
+
+生成图标库时，图标名称会与svg 文件名保持一致。如果对图标库进行了分组管理，则图标名称前面会添加目录名称作为前缀。
+
+例如：`browser/chrome-muti-color.svg` 生成后的图标名称为：`browser-chrome-muti-color`
+
+建议图标名称只使用 **英文、数字和连接线** 的组合。
+
+对于多色图标，生成工具会在生成报告中输出颜色序列，便于在项目中动态替换以实现图标换色功能。
+
+生成报告示例：
+
+```shell
+Add    ppt
+       [ '#f2733d', '#f3b2a6', '#fff' ]
+Update xls
+       [ '#47b347', '#e0efdc' ]
+Total 2 svg icon(s) generated, 1 added, 0 deleted.
+```
+
+> **除了自定义图标，现在还可以使用现成的图标库，比如这个:** <span class="banner">
+> <span class="surport">
+> <a href="https://ext.dcloud.net.cn/plugin?id=15226" target="_blank" class="btn btn-support" style="border: 1px solid #ec4d4d;letter-spacing: 1px;">
+>   Material图标集合 图标组件 SVG 图标库
+> </a>
+> </span>
+> </span>
+
+### 四、使用
+
+```vue
+<zui-svg-icon icon="my-icon" />
+```
+
+> 在新增 svg 图标或更新svg 图标后都需要按步骤三重新生成图标库
+
+<span class="banner">
 <span class="surport">
-<a href="https://ext.dcloud.net.cn/plugin?id=15226" target="_blank" class="btn btn-support" style="border: 1px solid #ec4d4d;letter-spacing: 1px;">
-  Material图标集合 图标组件 SVG 图标库
+<a class="btn btn-support " data-toggle="modal" data-target="#support_modal" style="border: 1px solid #ec4d4d;letter-spacing: 1px;">
+  🍓🍇🍉 好用就打赏一下  🍒🍑🥭
 </a>
 </span>
 </span>
 
 
-## 🍊 参数
+
+## 参数说明
 
 | 参数 | 类型 | 说明 |
 |---|---|---|
@@ -68,27 +176,9 @@ PS: 启动浏览器预览需要打开手机模器
 > 说明:
 >   当 icon 配置为 svg 源码字符串，图片URI，Data URI 时，图标不支持修改颜色
 
-<span class="banner">
-<span class="surport">
-<a class="btn btn-support " data-toggle="modal" data-target="#support_modal" style="border: 1px solid #ec4d4d;letter-spacing: 1px;">
-  🍓🍇🍉  喜欢就打赏一下  🍒🍑🥭
-</a>
-</span>
-</span>
 
 
-
-### 🍒 颜色锁定功能
-
-在配置 color 时，将对应位置的颜色设置为空时，将保留原来的颜色。
-
-『空值』是以下值中的任意一种：
-
-`空字符串, null, undefined, false, 0`
-
-
-
-## 🍑 事件
+## 事件
 
 #### @click=(evt: Event) => void
 
@@ -112,98 +202,25 @@ PS: 启动浏览器预览需要打开手机模器
 **PPPS：由于事件是兼容性处理，@click 和 @tap 事件里的 target 对象可能不一致，使用 target 时需要特别注意这个情况**
 
 
+<span class="banner">
+<span class="surport">
+<a class="btn btn-support " data-toggle="modal" data-target="#support_modal" style="border: 1px solid #ec4d4d;letter-spacing: 1px;">
+  🍓🍇🍉 好用就打赏一下  🍒🍑🥭
+</a>
+</span>
+</span>
 
 
 
-## 🍋 SVG 图标设计
+## 特色功能
 
-### 🤍 单色图标
+### 颜色锁定
 
-正常设计导出即可。
+在配置 color 时，将对应位置的颜色设置为空时，将保留原来的颜色。
 
+『空值』是以下值中的任意一种：
 
-
-### ❤️‍🔥 多色图标
-
-如果多色图标有改色需求，则在制作的时候需要人为控制颜色在SVG文件中出现的顺序，以确保图标的更新对代码的影响减至最小。
-
-#### 为什么需要控制颜色的顺序
-
-在SVG图像中，位于最底层的元素，其对应的节点描述最先出现在SVG文件里，这就决定了组件在获取颜色序列时，最底层元素的颜色始终第一位。
-
-由于设计师在图标的设计、修改过程中，设计元素的层级顺序会变化，这将导致颜色顺序无法固定。每次修改图标都可能需要更新代码里的配色顺序。这个问题在有一系列图标时尤为明显。
-
-#### 如何控制颜色顺序
-
-在SVG图标最底层，人为设置一组元素，将图标里使用到的颜色逻列出来即可。
-
-注意点：
-
-1. 元素必须使用上层可见元素去遮挡，设置透明度为0会导致元素被优化掉从而失去；
-2. 使用填充定义颜色，边框设置会被忽略；
-
-
-## 🍋 SVG 图标管理
-
-所有 svg 图标存放在项目的 `/static/svg-icons/` 文件夹中。
-
-支持按文件夹进行分组整理，经过预处理后的图标名称为 `[文件夹名]-[文件名]`
-
-如 chrome 图标存放于 `/browser/chrome.svg` ，则经过预处理后最终图标的名称为 `browser-chrome`
-
-
-
-## 🍋 SVG 图标生成
-
-使用专用脚本生成 SVG 图标库。
-
-
-
-### 🥑 生成步骤
-
-0. 安装依赖：`npm install svgo@latest --save-dev`
-1. 添加运行脚本
-   1. HBuilderX 项目：` "svgicon": "node ./uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
-   2. cli 项目：` "svgicon": "node ./src/uni_modules/zui-svg-icon/tools/generate-svg-icon.js"`
-2. 将 SVG 图标复制到 **图标保存位置**
-   1. HBuilderX 项目：`/static/svg-icons`
-   2. cli 项目：`/src/static/svg-icons`
-3. 运行脚本 `npm run svgicon`
-4. 结束！
-
-脚本会生成图标库时会保持和目录里的图标一致。
-
-生成脚本运行时会生成报告，显示图标的ID及状态（新增，修改与删除）。如果是多色图标还会显示对应的颜色序列。
-
-```shell
-Add    ppt
-       [ '#f2733d', '#f3b2a6', '#fff' ]
-Update xls
-       [ '#47b347', '#e0efdc' ]
-Total 2 svg icon(s) generated, 1 added, 0 deleted.
-```
-
-
-
-
-### 🍍 文件位置说明
-
-#### SVG图标位置：
-
-`/static/svg-icons/`
-
-#### 脚本位置：
-
-`/uni_modules/zui-svg-icon/tools/generate-svg-icon.js`
-
-CLI 项目脚本位置:
-`/src/uni_modules/zui-svg-icon/tools/generate-svg-icon.js`
-
-#### 图标库位置：
-
-`/static/svg-icons/svg-icons-lib.js`
-
-
+`空字符串, null, undefined, false, 0`
 
 
 
@@ -214,7 +231,7 @@ CLI 项目脚本位置:
 <span class="banner">
 <span class="surport">
 <a class="btn btn-support " data-toggle="modal" data-target="#support_modal" style="border: 1px solid #ec4d4d;letter-spacing: 1px;">
-  🍓🍇🍉  喜欢就打赏一下  🍒🍑🥭
+  🍓🍇🍉 好用就打赏一下  🍒🍑🥭
 </a>
 </span>
 </span>
