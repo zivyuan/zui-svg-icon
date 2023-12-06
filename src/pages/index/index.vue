@@ -49,8 +49,10 @@
       >
       <view class="img-icon-gallery">
         <view v-for="icon in imgIconLib" :key="icon.name" class="img-icon-item">
+          <!-- 添加颜色属性用于测试在不支持换色时的警告 -->
           <zui-svg-icon
             width="48rpx"
+            color="#00f"
             :icon="icon.img"
             :spin="spinIcon === icon.name && spinIconDur"
             :border-radius="borderRadius"

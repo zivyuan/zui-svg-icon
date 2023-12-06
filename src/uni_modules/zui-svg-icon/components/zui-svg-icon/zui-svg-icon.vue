@@ -260,6 +260,9 @@ export default {
     },
 
     initialIconColor() {
+      if (this.isFileSource && !!this.color) {
+        console.warn(`<zui-svg-icon /> 使用了未经过预处理的图标格式, 将不支持更换颜色. 未经过预处理的图标格式包括: URI, base64 图片, 原始SVG代码`)
+      }
       // Initial color map
       const oriColors = this.getOriginalColors()
       if (this.color && oriColors.length) {
