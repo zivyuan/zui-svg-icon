@@ -1,0 +1,24 @@
+{
+  "appid": "wx198bd5676d9dcf37",
+  "projectname": "zui-svg-icon",
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "file",
+        "value": "static/screencapture.png"
+      },
+      {
+        "type": "file",
+        "value": "static/thumb.png"
+      },
+      {
+        "type": "file",
+        "value": "static/preview-qr.png"
+      },
+      {
+        "type": "file",
+        "value": "static/preview.gif"
+      }
+    ]
+  }
+}
