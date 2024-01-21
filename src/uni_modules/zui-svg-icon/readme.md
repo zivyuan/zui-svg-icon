@@ -44,6 +44,18 @@ npm rum svgicon
 <zui-svg-icon icon="doc" :color="['#FF0000', '#00FF00', '#0000FF']" />
 ```
 
+#### 项目启动时出现错误
+
+当项目启动时出现如下错误时, 先随便编辑一个文件并保存，让编译器进行一次编译后即可正常运行。
+
+出现错误的原因是项目在启动时没有对图标库文件进行正确的转译造成的。
+
+```
+<!--  -->
+SyntaxError: Unexpected token 'export'
+<!--  -->
+Error: module 'static/svg-icons-lib.js' is not defined, require args is '../../../../static/svg-icons-lib.js'
+```
 
 
 ## 图标库管理

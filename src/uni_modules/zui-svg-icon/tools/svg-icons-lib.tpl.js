@@ -38,3 +38,7 @@ svglib.getCollection = (key = 'default') => {
 
 export const SvgIconLib = svglib
 export default SvgIconLib
+
+// #ifdef MP-WEIXIN
+module.exports = { SvgIconLib: svglib, default: svglib };
+// #endif
