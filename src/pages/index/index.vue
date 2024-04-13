@@ -51,8 +51,8 @@
         <view v-for="icon in imgIconLib" :key="icon.name" class="img-icon-item">
           <!-- 添加颜色属性用于测试在不支持换色时的警告 -->
           <zui-svg-icon
-            width="48rpx"
             color="#00f"
+            :width="iconSize"
             :icon="icon.img"
             :spin="spinIcon === icon.name && spinIconDur"
             :border-radius="borderRadius"
@@ -60,7 +60,14 @@
           />
         </view>
       </view>
-      <slider @changing="onRadiusChange" @change="onRadiusChange" />
+      <view class="control">
+        <vkew class="label">大小</vkew>
+        <slider class="slider" @changing="onSizeChange" @change="onSizeChange" />
+      </view>
+      <view class="control">
+        <vkew class="label">圆角</vkew>
+        <slider class="slider" @changing="onRadiusChange" @change="onRadiusChange" />
+      </view>
     </view>
   </view>
 </template>
@@ -124,6 +131,7 @@ export default {
       spinIconDur: 0,
 
       borderRadius: undefined,
+      iconSize: '48rpx',
     };
   },
 
@@ -179,6 +187,11 @@ export default {
     onRadiusChange(slider) {
       const r = (slider.detail.value / 100) * 0.5;
       this.borderRadius = r < 0.05 ? undefined : r;
+    },
+
+    onSizeChange(slider) {
+      const s = Math.round((slider.detail.value / 100) * 48 + 48)
+      this.iconSize = `${s}rpx`
     },
   },
 };
@@ -317,11 +330,28 @@ export default {
 
 .img-icon-gallery {
   display: flex;
+  flex-wrap: wrap;
   margin-bottom: 2em;
 }
 
 .img-icon-item {
   font-size: 48rpx;
   margin-right: 0.5em;
+}
+
+.control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .label {
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-right: 16rpx;
+  }
+
+  .slider {
+    width: 100%;
+  }
 }
 </style>
