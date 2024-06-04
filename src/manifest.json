@@ -1,104 +1,114 @@
 {
-    "name" : "zui-svg-icon",
-    "appid" : "__UNI__EFDF97A",
-    "description" : "SVG icon component for uni-app",
-    "versionName" : "0.1.0",
-    "versionCode" : "010",
-    "transformPx" : false,
-    /* 5+App特有相关 */
-    "app-plus" : {
-        "usingComponents" : true,
-        "nvueStyleCompiler" : "uni-app",
-        "compilerVersion" : 3,
-        "splashscreen" : {
-            "alwaysShowBeforeRender" : true,
-            "waiting" : true,
-            "autoclose" : true,
-            "delay" : 0
-        },
-        /* 模块配置 */
-        "modules" : {},
-        /* 应用发布信息 */
-        "distribute" : {
-            /* android打包配置 */
-            "android" : {
-                "permissions" : [
-                    "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
-                    "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
-                    "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
-                    "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
-                    "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.CAMERA\"/>",
-                    "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
-                    "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
-                    "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
-                    "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
-                    "<uses-feature android:name=\"android.hardware.camera\"/>",
-                    "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-                ]
-            },
-            /* ios打包配置 */
-            "ios" : {},
-            /* SDK配置 */
-            "sdkConfigs" : {}
+  "name": "zui-svg-icon",
+  "appid": "__UNI__EFDF97A",
+  "description": "SVG icon component for uni-app",
+  "versionName": "0.1.0",
+  "versionCode": "010",
+  "transformPx": false,
+  /* 5+App特有相关 */
+  "app-plus": {
+    "usingComponents": true,
+    "nvueStyleCompiler": "uni-app",
+    "compilerVersion": 3,
+    "splashscreen": {
+      "alwaysShowBeforeRender": true,
+      "waiting": true,
+      "autoclose": true,
+      "delay": 0
+    },
+    /* 模块配置 */
+    "modules": {},
+    /* 应用发布信息 */
+    "distribute": {
+      "orientation": [
+        "portrait-primary"
+      ],
+      /* android打包配置 */
+      "android": {
+        "permissions": [
+          "<uses-permission android:name=\"android.permission.CHANGE_NETWORK_STATE\"/>",
+          "<uses-permission android:name=\"android.permission.MOUNT_UNMOUNT_FILESYSTEMS\"/>",
+          "<uses-permission android:name=\"android.permission.VIBRATE\"/>",
+          "<uses-permission android:name=\"android.permission.READ_LOGS\"/>",
+          "<uses-permission android:name=\"android.permission.ACCESS_WIFI_STATE\"/>",
+          "<uses-feature android:name=\"android.hardware.camera.autofocus\"/>",
+          "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\"/>",
+          "<uses-permission android:name=\"android.permission.CAMERA\"/>",
+          "<uses-permission android:name=\"android.permission.GET_ACCOUNTS\"/>",
+          "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\"/>",
+          "<uses-permission android:name=\"android.permission.CHANGE_WIFI_STATE\"/>",
+          "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
+          "<uses-permission android:name=\"android.permission.FLASHLIGHT\"/>",
+          "<uses-feature android:name=\"android.hardware.camera\"/>",
+          "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
+        ]
+      },
+      /* ios打包配置 */
+      "ios": {},
+      /* SDK配置 */
+      "sdkConfigs": {},
+      "nvueLaunchMode": "normal",
+      "safearea": {
+        "background": "#f5f5f9",
+        "bottom": {
+          "offset": "auto"
         }
-    },
-    /* 快应用特有相关 */
-    "quickapp" : {},
-    /* 小程序特有相关 */
-    "mp-weixin" : {
-        "appid" : "wxc6931d68d47d113a",
-        "setting" : {
-            "urlCheck" : false,
-            "es6" : true,
-            "minified" : true
-        },
-        "usingComponents" : true
-    },
-    "mp-alipay" : {
-        "usingComponents" : true,
-        "appid" : "2021004107691648"
-    },
-    "mp-dingtalk" : {
-        "usingComponents" : true,
-        "appid" : "5000000004855261"
-    },
-    "mp-baidu" : {
-        "usingComponents" : true
-    },
-    "mp-toutiao" : {
-        "usingComponents" : true,
-        "setting" : {
-            "minified" : true
-        }
-    },
-    "uniStatistics" : {
-        "enable" : false
-    },
-    "vueVersion" : "2",
-    "h5" : {
-        "router" : {
-            "base" : "/zui-svg-icon/"
-        },
-        "optimization" : {
-            "treeShaking" : {
-                "enable" : true
-            }
-        },
-        "template" : "template/h5.html",
-        "title" : "zui-svg-icon 演示"
-    },
-    "mp-qq" : {
-        "appid" : "1112242173",
-        "setting" : {
-            "es6" : true,
-            "minified" : true
-        }
-    },
-    "mp-lark" : {
-        "appid" : "cli_a45fc08a73fb900b"
+      }
     }
+  },
+  /* 快应用特有相关 */
+  "quickapp": {},
+  /* 小程序特有相关 */
+  "mp-weixin": {
+    "appid": "wxc6931d68d47d113a",
+    "setting": {
+      "urlCheck": false,
+      "es6": true,
+      "minified": true
+    },
+    "usingComponents": true
+  },
+  "mp-alipay": {
+    "usingComponents": true,
+    "appid": "2021004107691648"
+  },
+  "mp-dingtalk": {
+    "usingComponents": true,
+    "appid": "5000000004855261"
+  },
+  "mp-baidu": {
+    "usingComponents": true
+  },
+  "mp-toutiao": {
+    "usingComponents": true,
+    "setting": {
+      "minified": true
+    }
+  },
+  "uniStatistics": {
+    "enable": false
+  },
+  "vueVersion": "2",
+  "h5": {
+    "router": {
+      "base": "/zui-svg-icon/"
+    },
+    "optimization": {
+      "treeShaking": {
+        "enable": true
+      }
+    },
+    "template": "template/h5.html",
+    "title": "zui-svg-icon 演示"
+  },
+  "mp-qq": {
+    "appid": "1112242173",
+    "setting": {
+      "es6": true,
+      "minified": true
+    }
+  },
+  "mp-lark": {
+    "appid": "cli_a45fc08a73fb900b"
+  }
 }

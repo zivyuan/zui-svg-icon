@@ -177,7 +177,7 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 | color | string  | 单色图标颜色 |
 |  | string[] | 多色图标颜色, 颜色种类必须与图标中的种类一致<br/>[了解多色图标👇🏻](#❤️‍🔥-多色图标) |
 | width | string \| number | 图标宽度. 默认 1.2em. |
-| height | undefined \| string \| number | 图标调试. 默认 undefined, 与高度一致. |
+| height | undefined \| string \| number | 图标调试. 默认 undefined, 即表示图标宽高相同, 是正方形. |
 | gray | number | 灰度显示系数, [0, 1]. 默认为 0, 不开启 |
 |  | boolean | 灰度显示系数. true => 1, false => 0 |
 | spin | boolean | 是否启用 spin 动画。默认 false |
