@@ -139,7 +139,7 @@ PS: 启动浏览器预览需要打开手机模器
 
 ## 🍋 SVG 图标管理
 
-所有 svg 图标存放在项目的 `/static/svg-icons/` 文件夹中。
+所有 svg 图标存放在项目的 `/assets/svg-icons/` 文件夹中。
 
 支持按文件夹进行分组整理，经过预处理后的图标名称为 `[文件夹名]-[文件名]`
 
@@ -181,7 +181,7 @@ Total 2 svg icon(s) generated, 1 added, 0 deleted.
 
 #### SVG图标位置：
 
-`/static/svg-icons/`
+`/assets/svg-icons/`
 
 #### 脚本位置：
 

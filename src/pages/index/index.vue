@@ -80,31 +80,31 @@ import Color from "color";
 const imgIconLib = [
   {
     name: "a-uniapp",
-    img: "/static/svg-icons/uniapp.svg",
+    img: "/static/icons/uniapp.svg",
   },
   {
     name: "b-google-play",
-    img: "/static/svg-icons/app/google/google-play.svg",
+    img: "/static/icons/app/google/google-play.svg",
   },
   {
     name: "c-instagram",
-    img: "/static/svg-icons/app/instagram.svg",
+    img: "/static/icons/app/instagram.svg",
   },
   {
     name: "chrome",
-    img: "/static/svg-icons/browser/chrome.svg",
+    img: "/static/icons/browser/chrome.svg",
   },
   {
     name: "edge",
-    img: "/static/svg-icons/browser/edge.svg",
+    img: "/static/icons/browser/edge.svg",
   },
   {
     name: "firefox",
-    img: "/static/svg-icons/browser/firefox.svg",
+    img: "/static/icons/browser/firefox.svg",
   },
   {
     name: "safari",
-    img: "/static/svg-icons/browser/safari.svg",
+    img: "/static/icons/browser/safari.svg",
   },
 ];
 

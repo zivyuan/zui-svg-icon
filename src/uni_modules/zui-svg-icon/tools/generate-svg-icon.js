@@ -53,13 +53,13 @@ if (!fs.existsSync(svgo)) {
 }
 
 // 需要处理的颜色属性
-let svgBase = root + '/static'
+let svgBase = root + '/assets'
 const svgFolder = options.source || svgBase + '/svg-icons'
 
 if (!fs.existsSync(svgFolder)) {
   fs.mkdirSync(svgFolder, { recursive: true })
 }
-const svgLibFile = svgBase + `/${options.lib || 'svg-icons-lib'}.js`
+const svgLibFile = root + `/static/${options.lib || 'svg-icons-lib'}.js`
 
 const svgLibCurrent = (() => {
   try {

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_2" data-name="图层 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 64 64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#_未命名的渐变_14);
+        opacity: .35;
+      }
+
+      .cls-1, .cls-2 {
+        isolation: isolate;
+      }
+
+      .cls-2 {
+        fill: url(#_未命名的渐变_16);
+        opacity: .41;
+      }
+
+      .cls-3 {
+        fill: url(#_未命名的渐变_15);
+      }
+
+      .cls-4 {
+        fill: url(#_未命名的渐变_17);
+      }
+
+      .cls-5 {
+        fill: url(#_未命名的渐变_18);
+      }
+
+      .cls-6 {
+        fill: url(#_未命名的渐变_13);
+      }
+
+      .cls-7 {
+        fill: #1ebbee;
+        opacity: 0;
+      }
+    </style>
+    <linearGradient id="_未命名的渐变_13" data-name="未命名的渐变 13" x1="2503.42" y1="2643.85" x2="2681.71" y2="2643.85" gradientTransform="translate(-570.91 -576.1) scale(.23)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0c59a4"/>
+      <stop offset="1" stop-color="#114a8b"/>
+    </linearGradient>
+    <radialGradient id="_未命名的渐变_14" data-name="未命名的渐变 14" cx="2601.92" cy="2772.41" fx="2601.92" fy="2772.41" r="95.38" gradientTransform="translate(-570.91 -573.41) scale(.23 .22)" gradientUnits="userSpaceOnUse">
+      <stop offset=".72" stop-color="#000" stop-opacity="0"/>
+      <stop offset=".95" stop-color="#000" stop-opacity=".53"/>
+      <stop offset="1" stop-color="#000"/>
+    </radialGradient>
+    <linearGradient id="_未命名的渐变_15" data-name="未命名的渐变 15" x1="2597.49" y1="2566.57" x2="2486.1" y2="2687.9" gradientTransform="translate(-570.91 -576.1) scale(.23)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1b9de2"/>
+      <stop offset=".16" stop-color="#1595df"/>
+      <stop offset=".67" stop-color="#0680d7"/>
+      <stop offset="1" stop-color="#0078d4"/>
+    </linearGradient>
+    <radialGradient id="_未命名的渐变_16" data-name="未命名的渐变 16" cx="-2831.07" cy="4930.14" fx="-2831.07" fy="4930.14" r="143.24" gradientTransform="translate(-806.23 -746.83) rotate(-81.38) scale(.23 .19) skewX(.07)" gradientUnits="userSpaceOnUse">
+      <stop offset=".76" stop-color="#000" stop-opacity="0"/>
+      <stop offset=".95" stop-color="#000" stop-opacity=".5"/>
+      <stop offset="1" stop-color="#000"/>
+    </radialGradient>
+    <radialGradient id="_未命名的渐变_17" data-name="未命名的渐变 17" cx="1291.78" cy="-1579.89" fx="1291.78" fy="-1579.89" r="202.43" gradientTransform="translate(-768.45 -319.25) rotate(92.29) scale(.23 .5) skewX(.3)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#35c1f1"/>
+      <stop offset=".11" stop-color="#34c1ed"/>
+      <stop offset=".23" stop-color="#2fc2df"/>
+      <stop offset=".31" stop-color="#2bc3d2"/>
+      <stop offset=".67" stop-color="#36c752"/>
+    </radialGradient>
+    <radialGradient id="_未命名的渐变_18" data-name="未命名的渐变 18" cx="2524.08" cy="-3136.88" fx="2524.08" fy="-3136.88" r="97.34" gradientTransform="translate(-680.76 -378.64) rotate(73.74) scale(.23 .19) skewX(.14)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#66eb6e"/>
+      <stop offset="1" stop-color="#66eb6e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <g id="svg137">
+    <g>
+      <rect class="cls-7" width="64" height="64"/>
+      <g id="g4794">
+        <path id="path4745" class="cls-6" d="m56.15,46.65c-.8.42-1.62.79-2.47,1.1-2.69,1.01-5.54,1.52-8.41,1.51-11.09,0-20.75-7.63-20.75-17.42.03-2.67,1.5-5.12,3.85-6.4-10.03.42-12.61,10.87-12.61,17,0,17.31,15.96,19.07,19.39,19.07,1.85,0,4.65-.54,6.33-1.07l.31-.1c6.46-2.23,11.96-6.6,15.61-12.37.28-.44.15-1.02-.29-1.29-.29-.18-.66-.19-.96-.03Z"/>
+        <path id="path4747" class="cls-1" d="m56.15,46.65c-.8.42-1.62.79-2.47,1.1-2.69,1.01-5.54,1.52-8.41,1.51-11.09,0-20.75-7.63-20.75-17.42.03-2.67,1.5-5.12,3.85-6.4-10.03.42-12.61,10.87-12.61,17,0,17.31,15.96,19.07,19.39,19.07,1.85,0,4.65-.54,6.33-1.07l.31-.1c6.46-2.23,11.96-6.6,15.61-12.37.28-.44.15-1.02-.29-1.29-.29-.18-.66-.19-.96-.03Z"/>
+        <path id="path4749" class="cls-3" d="m26.78,58.57c-2.09-1.3-3.9-3-5.33-5-6.16-8.44-4.31-20.27,4.13-26.43.88-.64,1.82-1.21,2.79-1.69.73-.34,1.98-.97,3.64-.94,2.37.02,4.6,1.14,6.02,3.05.95,1.26,1.47,2.79,1.49,4.37,0-.05,5.73-18.65-18.75-18.65C10.49,13.28,2.03,23.04,2.03,31.61c-.04,4.53.93,9.01,2.84,13.12,6.46,13.78,22.21,20.54,36.65,15.73-4.94,1.56-10.32.87-14.71-1.87h-.02Z"/>
+        <path id="path4751" class="cls-2" d="m26.78,58.57c-2.09-1.3-3.9-3-5.33-5-6.16-8.44-4.31-20.27,4.13-26.43.88-.64,1.82-1.21,2.79-1.69.73-.34,1.98-.97,3.64-.94,2.37.02,4.6,1.14,6.02,3.05.95,1.26,1.47,2.79,1.49,4.37,0-.05,5.73-18.65-18.75-18.65C10.49,13.28,2.03,23.04,2.03,31.61c-.04,4.53.93,9.01,2.84,13.12,6.46,13.78,22.21,20.54,36.65,15.73-4.94,1.56-10.32.87-14.71-1.87h-.02Z"/>
+        <path id="path4753" class="cls-4" d="m37.7,36.88c-.19.25-.77.59-.77,1.33,0,.61.4,1.2,1.11,1.69,3.37,2.34,9.72,2.03,9.74,2.03,2.5,0,4.95-.68,7.09-1.96,4.41-2.57,7.12-7.29,7.13-12.39.06-5.25-1.87-8.74-2.66-10.29C54.37,7.58,43.65,2,32,2c-16.4,0-29.77,13.17-30,29.57.11-8.56,8.62-15.48,18.75-15.48.82,0,5.5.08,9.84,2.36,3.83,2.01,5.84,4.44,7.23,6.85,1.45,2.5,1.71,5.66,1.71,6.92s-.64,3.12-1.83,4.67Z"/>
+        <path id="path4755" class="cls-5" d="m37.7,36.88c-.19.25-.77.59-.77,1.33,0,.61.4,1.2,1.11,1.69,3.37,2.34,9.72,2.03,9.74,2.03,2.5,0,4.95-.68,7.09-1.96,4.41-2.57,7.12-7.29,7.13-12.39.06-5.25-1.87-8.74-2.66-10.29C54.37,7.58,43.65,2,32,2c-16.4,0-29.77,13.17-30,29.57.11-8.56,8.62-15.48,18.75-15.48.82,0,5.5.08,9.84,2.36,3.83,2.01,5.84,4.44,7.23,6.85,1.45,2.5,1.71,5.66,1.71,6.92s-.64,3.12-1.83,4.67Z"/>
+      </g>
+    </g>
+  </g>
+</svg>
