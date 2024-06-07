@@ -30,7 +30,7 @@ PS: 启动浏览器预览需要打开手机模器
 ### 〇、生成图标库
 
 ```shell
-npm rum svgicon
+npm run svgicon
 ```
 
 > 第一次使用请先参考下方 **图标库管理** 章节
@@ -101,13 +101,13 @@ cli 项目
 HBuilderX 项目
 
 ```shell
-./static/svg-icons/
+./assets/svg-icons/
 ```
 
 cli 项目
 
 ```shell
-./src/static/svg-icons/
+./src/assets/svg-icons/
 ```
 
 > 在 svg 目录中可以对图标按文件夹进行分组管理
