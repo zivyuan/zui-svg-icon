@@ -199,7 +199,7 @@ const generateIcon = svgRaw => {
   const colorTotal = colors.length
 
   if (colorTotal === 0) {
-    const fixable = /<(path|circle|ellipse|polygon|polyline|rect) /g
+    const fixable = /<(path|circle|ellipse|polygon|polyline|rect|use) /g
     if (fixable.test(result.data)) {
       return generateIcon(result.data.replace(fixable, `<$1 fill="${currentColor || defaultColor}" `))
     } else {
