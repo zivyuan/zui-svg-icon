@@ -1,7 +1,7 @@
 {
   "id": "zui-svg-icon",
-  "displayName": "多彩SVG图标，自由换色，全端适配",
-  "version": "0.1.61",
+  "displayName": "SVG Icon，彩色图标，SVG 图标。自由换色，全端适配",
+  "version": "0.1.62",
   "description": "一款适用于 uni-app 的 SVG 图标组件。全端适配：APP-Plus、小程序、H5。支持多色SVG图标；支持换色；支持URI和Base64格式；支持spin动画；SVG优化",
   "keywords": [
     "svg",
@@ -12,7 +12,7 @@
 ],
   "repository": "https://github.com/zivyuan/zui-svg-icon.git",
   "engines": {
-    "HBuilderX": "^3.4.15"
+    "HBuilderX": "^3.7.0"
   },
   "dcloudext": {
     "type": "component-vue",
@@ -49,8 +49,10 @@
           "vue3": "y"
         },
         "App": {
-          "app-vue": "y",
-          "app-nvue": "n"
+            "app-vue": "y",
+            "app-nvue": "n",
+            "app-harmony": "u",
+            "app-uvue": "u"
         },
         "H5-mobile": {
           "Safari": "y",

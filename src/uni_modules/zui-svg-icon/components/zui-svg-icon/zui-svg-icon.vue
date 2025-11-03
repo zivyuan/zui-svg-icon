@@ -101,9 +101,34 @@ export default {
   },
 
   computed: {
+    /**
+     * 是否文件来源
+     *
+     * 包含 url, svg原始字符串, 未进行 base64 编码的 data:image/svg+xml uri
+     */
+    isFileSource() {
+      if (/^https?\:\/\//i.test(this.icon)) return true
+      if (/^data:image\//i.test(this.icon)) return true
+      if (/\.svg([?#].*)?$/i.test(this.icon)) return true
+      if (this.icon.indexOf('/') > -1) return true
+
+      return false
+    },
+
+    /**
+     * 对用户输入 ID 进行预处理, 以转换为正确的 ID
+     *
+     * 仅处理当不是文件(SVG raw), url 时才进行处理 id
+     */
+    iconId() {
+      return !this.isFileSource ? this.icon.replace(/[\/\\]/g, '-').toLowerCase() : this.icon
+    },
+
     cWidth() {
-      const wid = /rpx$/i.test(this.width) ? rpx2px(this.width, true) : this.width
-      return typeof wid === 'number' ? `${wid}px` : wid
+      const width = this.width
+      if (typeof width === 'number') return `${width}px`
+      if (/^\d+rpx$/i.test(width)) return rpx2px(width, true) + 'px'
+      return width
     },
 
     cHeight() {
@@ -126,27 +151,12 @@ export default {
       return SvgIconLib.getCollection(this.collection || 'default')
     },
 
-    /**
-     * 是否文件来源
-     *
-     * 包含 url, svg原始字符串, 未进行 base64 编码的 data:image/svg+xml uri
-     */
-    isFileSource() {
-      if (/^https?\:\/\//i.test(this.icon)) return true
-      if (/^data:image\//i.test(this.icon)) return true
-      if (/\.svg([?#].*)?$/i.test(this.icon)) return true
-      if (this.icon.indexOf('/') > -1) return true
-
-      return false
-    },
-
     svgRaw() {
       if (this.isFileSource) return this.icon
 
-      const iconId = this.icon.toLowerCase()
-      const iconPreset = this.svgIconLib.icons[iconId]
+      const iconPreset = this.svgIconLib.icons[this.iconId]
       if (!iconPreset) {
-        console.warn(`Svg icon [${iconId}] not defined and no fallback icon set.`)
+        console.warn(`Svg icon [${this.iconId}] not defined and no fallback icon set.`)
         return
       }
       let svg = iconPreset[0]
@@ -161,19 +171,24 @@ export default {
     },
 
     svgDataurl() {
+      if (this._svgDataurlCache === this.svgRaw) {
+        return this._svgDataurlCacheResult
+      }
+
+      let result
       if (!this.isFileSource) {
-        return `data:image/svg+xml,${encodeURIComponent(this.svgRaw)}`
+        result = `data:image/svg+xml,${encodeURIComponent(this.svgRaw)}`
+      } else if (/^data:image\/svg\+xml,<svg/i.test(this.icon)) {
+        result = `data:image/svg+xml,${encodeURIComponent(this.icon.substring(19))}`
+      } else if (/^<svg/i.test(this.icon)) {
+        result = `data:image/svg+xml,${encodeURIComponent(this.icon)}`
+      } else {
+        result = this.icon
       }
 
-      if (/^data:image\/svg\+xml,<svg/i.test(this.icon)) {
-        return `data:image/svg+xml,${encodeURIComponent(this.icon.substring(19))}`
-      }
-
-      if (/^<svg/i.test(this.icon)) {
-        return `data:image/svg+xml,${encodeURIComponent(this.icon)}`
-      }
-
-      return this.icon
+      this._svgDataurlCache = this.svgRaw
+      this._svgDataurlCacheResult = result
+      return result
     },
 
     clazz() {
@@ -190,43 +205,22 @@ export default {
         '--zui-svg-icon-height': this.cHeight,
       }
 
-      if (this.borderRadius) {
-        let br = this.borderRadius
-        if (typeof this.borderRadius === 'string') {
-          if (!/[^a-z%]/i.test(this.borderRadius)) {
-            const v = parseFloat(this.borderRadius)
-            if (v < 1) {
-              br = `${v * 100}%`
-            } else {
-              br = `${v}px`
-            }
-          }
-        } else {
-          if (this.borderRadius < 1) {
-            br = `${this.borderRadius * 100}%`
-          } else {
-            br = `${this.borderRadius}px`
-          }
-        }
+      if (this.borderRadius != null) {
+        const br = this.formatBorderRadius(this.borderRadius)
         style['--zui-svg-icon-border-radius'] = br
       }
 
       if (this.gray) {
-        if (typeof this.gray === 'number') {
-          style['filter'] = `grayscale(${this.gray})`
-        } else {
-          style['filter'] = 'grayscale(1)'
-        }
+        style.filter = `grayscale(${typeof this.gray === 'number' ? this.gray : 1})`
       }
 
       if (this.spin) {
-        const rotateDur = this.spin === true ? 5 : Math.abs(this.spin)
-        style['--zui-svg-icon-rotate-duration'] = `${rotateDur}s`
+        style['--zui-svg-icon-rotate-duration'] = `${Math.abs(this.spin === true ? 5 : this.spin)}s`
       }
 
-      return Object.keys(style)
-        .map(key => `${key}:${style[key]}`)
-        .join('; ')
+      return Object.entries(style)
+        .map(([key, value]) => `${key}:${value}`)
+        .join(';')
     },
   },
 
@@ -239,6 +233,11 @@ export default {
     },
   },
 
+  created() {
+    this._svgDataurlCache = ''
+    this._svgDataurlCacheResult = ''
+  },
+
   mounted() {
     this.initialIcon()
   },
@@ -248,15 +247,15 @@ export default {
       // #ifdef MP-ALIPAY || MP-DINTTALK || MP-DINGDING
       this.$emit('tap', evt)
       // #endif
-      setTimeout(() => {
+      this.$nextTick(() => {
         this.$emit('click', evt)
-      }, 1)
+      })
     },
 
     doTap(evt) {
-      setTimeout(() => {
+      this.$nextTick(() => {
         this.$emit('click', evt)
-      }, 1)
+      })
     },
 
     initialIconColor() {
@@ -287,8 +286,20 @@ export default {
     },
 
     getOriginalColors() {
-      const iconPreset = this.svgIconLib.icons[this.icon]
+      const iconPreset = this.svgIconLib.icons[this.iconId]
       return iconPreset ? iconPreset.slice(1).map(idx => this.svgIconLib.$_colorPalette[idx]) : []
+    },
+
+    formatBorderRadius(value) {
+      if (typeof value === 'number') {
+        return value < 1 ? `${value * 100}%` : `${value}px`
+      }
+      if (typeof value === 'string') {
+        const num = parseFloat(value)
+        if (isNaN(num)) return value
+        return /[%]$/.test(value) ? value : `${num}px`
+      }
+      return '0'
     },
   },
 }
