@@ -25,6 +25,24 @@ PS: 启动浏览器预览需要打开手机模器
 
 
 
+## 通过 NPM 维护（推荐）
+
+插件已发布至 npm，推荐使用 npm 进行安装与版本维护：
+
+```shell
+npm i zui-svg-icon
+```
+
+安装后插件会以 uni_modules 规范的形式存在于 `node_modules/zui-svg-icon`，无需再将 `zui-svg-icon` 目录复制到项目的 `uni_modules` 目录中，后续升级只需：
+
+```shell
+npm update zui-svg-icon
+```
+
+> 说明：
+> - npm 安装方式同样依赖 `svgo` 生成图标库，图标库管理章节中的配置步骤不变；
+> - 如需同时兼容 HBuilderX 插件市场安装方式，`dcloudext.npmurl` 已指向对应的 npm 包地址。
+
 ## 快速上手：
 
 ### 〇、生成图标库
