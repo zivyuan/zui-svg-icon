@@ -1,3 +1,5 @@
+## 0.1.63
+1. 支持 NPM 维护：补充 npm 包元数据（name/main/files/license 等），`dcloudext.npmurl` 指向 npm 包，支持通过 `npm i zui-svg-icon` 安装与升级
 ## 0.1.62（2025-11-03）
 1. 增加大写图标名称兼容
 2. 增加缓存机制, 优化图标加载速度

@@ -1,16 +1,38 @@
 {
   "id": "zui-svg-icon",
+  "name": "zui-svg-icon",
   "displayName": "SVG Icon，彩色图标，SVG 图标。自由换色，全端适配",
-  "version": "0.1.62",
+  "version": "0.1.63",
   "description": "一款适用于 uni-app 的 SVG 图标组件。全端适配：APP-Plus、小程序、H5。支持多色SVG图标；支持换色；支持URI和Base64格式；支持spin动画；SVG优化",
   "keywords": [
     "svg",
     "svg-icon",
     "svg图标",
     "彩色图标",
-    "换色"
-],
-  "repository": "https://github.com/zivyuan/zui-svg-icon.git",
+    "图标",
+    "换色",
+    "uniapp",
+    "uni-app",
+    "uni_modules"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zivyuan/zui-svg-icon.git"
+  },
+  "homepage": "https://github.com/zivyuan/zui-svg-icon#readme",
+  "bugs": {
+    "url": "https://github.com/zivyuan/zui-svg-icon/issues"
+  },
+  "license": "MIT",
+  "author": "ziv.yuan@gmail.com",
+  "main": "components/zui-svg-icon/zui-svg-icon.vue",
+  "files": [
+    "components",
+    "utils",
+    "static",
+    "changelog.md",
+    "readme.md"
+  ],
   "engines": {
     "HBuilderX": "^3.7.0"
   },
@@ -32,7 +54,7 @@
       "data": "无",
       "permissions": "无"
     },
-    "npmurl": ""
+    "npmurl": "https://www.npmjs.com/package/zui-svg-icon"
   },
   "uni_modules": {
     "dependencies": [],
